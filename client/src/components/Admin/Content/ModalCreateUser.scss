@@ -1,0 +1,47 @@
+.modal-content {
+  padding: 20px;
+}
+
+.bg-upload {
+  margin-top: 30px;
+  margin-left: 8px;
+  // margin-bottom: 10px;
+  cursor: pointer;
+  border: 1px solid gray;
+  padding: 8px;
+  width: auto;
+  display: flex;
+  border-radius: 5px;
+  background-color: rgb(243, 243, 243);
+  border: none;
+  align-items: center;
+  transition: 0.3s;
+  .upload {
+    cursor: pointer;
+    margin: 0;
+    // margin-left: 8px;
+    // font-weight: 500;
+  }
+}
+
+.bg-upload:hover {
+  background-color: rgb(220, 220, 220);
+}
+
+.img-preview {
+  border-radius: 5px;
+  margin-left: 8px;
+  border: 1px dashed rgb(195, 195, 195);
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  overflow: hidden; /* Add this to ensure image doesn't overflow the container */
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Use contain to maintain aspect ratio */
+  }
+}

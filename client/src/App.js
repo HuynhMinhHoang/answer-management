@@ -1,6 +1,6 @@
 import "./App.scss";
 import Header from "./components/Header/Header";
-import { Route, Link, Routes, Outlet } from "react-router-dom";
+import { Route, Link, Routes, Outlet, useLocation } from "react-router-dom";
 
 const App = () => {
   return (
