@@ -21,6 +21,7 @@ import { FaReact } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ImgAdmin from "../../assets/admin.png";
 
 const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
   return (
@@ -36,18 +37,37 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
           <div
             style={{
               padding: "24px",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-              fontSize: 20,
-              marginLeft: 10,
-              letterSpacing: "1px",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-              color: "rgb(0, 152, 229)",
+              display: "flex",
+              justifyContent: "center",
+              // alignItems: "center",
             }}
           >
-            ADMIN Management
+            <div>
+              <img
+                src={ImgAdmin}
+                alt="admin"
+                style={{
+                  height: "25px",
+                  width: "25px",
+                  marginRight: "10px",
+                  // marginTop: "5px",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                textTransform: "uppercase",
+                fontWeight: "800",
+                fontSize: 18,
+                whiteSpace: "nowrap",
+                color: "#1D79D4",
+                marginTop: "2px",
+                // display: "flex",
+                // alignItems: "baseline",
+              }}
+            >
+              Answer Management
+            </div>
           </div>
         </SidebarHeader>
 
