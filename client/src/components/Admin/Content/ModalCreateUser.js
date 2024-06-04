@@ -73,109 +73,107 @@ const ModalCreateUser = () => {
   return (
     <>
       <div className="card-container">
-        <div className="col-md-6 col-12">
-          <div className="card">
-            <div className="card-content">
-              <div className="card-body">
-                <div className="form form-vertical">
-                  <div className="form-body">
+        <div className="card">
+          <div className="card-content">
+            <div className="card-body">
+              <div className="form form-vertical">
+                <div className="form-body">
+                  <div className="col-12">
+                    <div className="form-group">
+                      <label>Username</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-12">
                       <div className="form-group">
-                        <label>Username</label>
+                        <label>Email</label>
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
-                          placeholder="Username"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
+                          placeholder="Email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-12">
-                        <div className="form-group">
-                          <label>Email</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                        </div>
-                      </div>
 
-                      <div className="col-12">
-                        <div className="form-group">
-                          <label>Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="form-group">
-                          <label className="contact-info-vertical">Role</label>
-                          <select
-                            className="form-control"
-                            value={role}
-                            onChange={(e) => {
-                              setRole(e.target.value);
-                            }}
-                          >
-                            <option value="USER">USER</option>
-                            <option value="ADMIN">ADMIN</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="col-md-6 bg-upload">
-                        <label
-                          className="form-label upload"
-                          htmlFor="inputUpload"
-                        >
-                          <FaCloudUploadAlt
-                            size={"23px"}
-                            style={{ marginRight: "8px" }}
-                          />
-                          Upload Avatar
-                        </label>
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label>Password</label>
                         <input
-                          id="inputUpload"
-                          type="file"
-                          hidden
-                          onChange={(e) => handleUploadAvatar(e)}
+                          type="password"
+                          className="form-control"
+                          placeholder="Password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
-
-                      <div className="col-md-12 img-preview">
-                        {preview ? (
-                          <img src={preview} />
-                        ) : (
-                          <span>Please choose photo...</span>
-                        )}
-                      </div>
-
-                      <div className="col-12 d-flex justify-content-end">
-                        <button
-                          type="save"
-                          className="btn-save"
-                          onClick={() => handleCreateUser()}
+                    </div>
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label className="contact-info-vertical">Role</label>
+                        <select
+                          className="form-control"
+                          value={role}
+                          onChange={(e) => {
+                            setRole(e.target.value);
+                          }}
                         >
-                          Submit
-                        </button>
-                        <button
-                          type="cancel"
-                          className="btn-cancel"
-                          onClick={() => resetData()}
-                        >
-                          Reset
-                        </button>
+                          <option value="USER">USER</option>
+                          <option value="ADMIN">ADMIN</option>
+                        </select>
                       </div>
+                    </div>
+
+                    <div className="col-md-6 bg-upload">
+                      <label
+                        className="form-label upload"
+                        htmlFor="inputUpload"
+                      >
+                        <FaCloudUploadAlt
+                          size={"23px"}
+                          style={{ marginRight: "8px" }}
+                        />
+                        Upload Avatar
+                      </label>
+                      <input
+                        id="inputUpload"
+                        type="file"
+                        hidden
+                        onChange={(e) => handleUploadAvatar(e)}
+                      />
+                    </div>
+
+                    <div className="col-md-12 img-preview">
+                      {preview ? (
+                        <img src={preview} />
+                      ) : (
+                        <span>Please choose photo...</span>
+                      )}
+                    </div>
+
+                    <div className="col-12 d-flex justify-content-end">
+                      <button
+                        type="save"
+                        className="btn-save"
+                        onClick={() => handleCreateUser()}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        type="cancel"
+                        className="btn-cancel"
+                        onClick={() => resetData()}
+                      >
+                        Reset
+                      </button>
                     </div>
                   </div>
                 </div>

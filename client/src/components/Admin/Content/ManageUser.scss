@@ -1,5 +1,10 @@
 .manage-user-container {
+  width: 100%;
+  // border: 1px solid red;
   padding: 30px 30px 30px 30px;
+  display: flex;
+  // align-items: center;
+  justify-content: center;
   .title {
     // margin-bottom: 20px;
     font-size: 1.75rem;
@@ -8,5 +13,14 @@
   }
   p {
     color: rgba(96, 112, 128, 0.75);
+  }
+
+  .form-add-user {
+    width: 35%;
+  }
+  .table-user {
+    width:65%;
+    // display: flex;
+    // justify-content: center;
   }
 }
