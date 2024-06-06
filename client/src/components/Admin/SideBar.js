@@ -15,7 +15,6 @@ import {
   FaGithub,
   FaRegLaughWink,
 } from "react-icons/fa";
-import sidebarBg from "../../assets/bg3.png";
 import "./SideBar.scss";
 import { FaReact } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";

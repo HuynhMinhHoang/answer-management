@@ -1,15 +1,51 @@
-import React from "react";
-import ModalCreateUser from "./ModalCreateUser";
+import React, { useEffect, useState } from "react";
 import "./ManageUser.scss";
 import TableUser from "./TableUser";
+import { getListUser } from "../../../services/APIService";
+import { ModalCRUDUser } from "./ModalCRUDUser";
 
 const ManageUser = () => {
+  const [listUser, setListUser] = useState([]);
+  const [dataUserEdit, setdataUserEdit] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await getListUser();
+      setListUser(res.DT);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleEditUser = (user) => {
+    setdataUserEdit(user);
+  };
+
+  const resetDataUserEdit = () => {
+    setdataUserEdit(null);
+  };
+
+  console.log("dataUserEdit", dataUserEdit);
+
   return (
     <div className="manage-user-container">
       <div className="form-add-user">
-        <div className="title">Add New User</div>
+        {dataUserEdit ? (
+          <div className="title">Update User</div>
+        ) : (
+          <div className="title">Add New User</div>
+        )}
+
         <p>Multiple form layouts, you can use.</p>
-        <ModalCreateUser />
+        <ModalCRUDUser
+          fetchData={fetchData}
+          dataUserEdit={dataUserEdit}
+          resetDataUserEdit={resetDataUserEdit}
+        />
       </div>
 
       <div className="table-user">
@@ -20,7 +56,7 @@ const ManageUser = () => {
           with
           <code>.table-bordered</code>.
         </p>
-        <TableUser />
+        <TableUser listUser={listUser} handleEditUser={handleEditUser} />
       </div>
     </div>
   );

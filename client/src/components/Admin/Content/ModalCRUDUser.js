@@ -1,13 +1,12 @@
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import "./ModalCreateUser.scss";
+import { useEffect, useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import axios from "axios";
 import { toast } from "react-toastify";
-import { postCreateNewUser } from "../../../services/APIService";
+import { postCreateNewUser, updateUser } from "../../../services/APIService";
+import "./ModalCRUDUser.scss";
 
-const ModalCreateUser = () => {
+export const ModalCRUDUser = (props) => {
+  const { fetchData, dataUserEdit, resetDataUserEdit } = props;
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +14,7 @@ const ModalCreateUser = () => {
   const [avatar, setAvatar] = useState("");
   const [preview, setPreview] = useState("");
 
+  //handle create user
   const handleUploadAvatar = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreview(URL.createObjectURL(e.target.files[0]));
@@ -53,6 +53,7 @@ const ModalCreateUser = () => {
       setPassword("");
       setAvatar("");
       setPreview("");
+      await fetchData();
       toast.success(res.EM);
       console.log(res);
     } else {
@@ -67,7 +68,47 @@ const ModalCreateUser = () => {
     setPassword("");
     setAvatar("");
     setPreview("");
+    resetDataUserEdit(null);
     toast.success("Reset Data Succcess!");
+  };
+
+  //handle update user
+  useEffect(() => {
+    if (dataUserEdit) {
+      setUsername(dataUserEdit.username);
+      setEmail(dataUserEdit.email);
+      setRole(dataUserEdit.role);
+      if (dataUserEdit.image) {
+        setAvatar(dataUserEdit.image);
+        setPreview(`data:image/jpeg;base64,${dataUserEdit.image}`);
+      } else {
+        setAvatar("");
+        setPreview("");
+      }
+    }
+  }, [dataUserEdit]);
+
+  const handleUpdateUser = async () => {
+    if (!validateEmail(email)) {
+      toast.error("Email is not valid!");
+      return;
+    }
+
+    let res = await updateUser(dataUserEdit.id, username, role, avatar);
+    if (res && res.EC === 0) {
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setAvatar("");
+      setPreview("");
+      await fetchData();
+      resetDataUserEdit(null);
+      toast.success(res.EM);
+      console.log(res);
+    } else {
+      toast.error(res.EM);
+      console.log(res);
+    }
   };
 
   return (
@@ -100,11 +141,15 @@ const ModalCreateUser = () => {
                           placeholder="Email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
+                          disabled={dataUserEdit ? true : false}
                         />
                       </div>
                     </div>
 
-                    <div className="col-12">
+                    <div
+                      className="col-12"
+                      // hidden={dataUserEdit ? true : false}
+                    >
                       <div className="form-group">
                         <label>Password</label>
                         <input
@@ -113,6 +158,7 @@ const ModalCreateUser = () => {
                           placeholder="Password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
+                          disabled={dataUserEdit ? true : false}
                         />
                       </div>
                     </div>
@@ -160,13 +206,23 @@ const ModalCreateUser = () => {
                     </div>
 
                     <div className="col-12 d-flex justify-content-end">
-                      <button
-                        type="save"
-                        className="btn-save"
-                        onClick={() => handleCreateUser()}
-                      >
-                        Submit
-                      </button>
+                      {dataUserEdit ? (
+                        <button
+                          type="save"
+                          className="btn-update"
+                          onClick={() => handleUpdateUser()}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          type="save"
+                          className="btn-save"
+                          onClick={() => handleCreateUser()}
+                        >
+                          Create
+                        </button>
+                      )}
                       <button
                         type="cancel"
                         className="btn-cancel"
@@ -183,104 +239,5 @@ const ModalCreateUser = () => {
         </div>
       </div>
     </>
-    // <>
-    //   <Button variant="primary" onClick={handleShow}>
-    //     Launch demo modal
-    //   </Button>
-
-    //   <Modal
-    //     backdrop="static"
-    //     show={show}
-    //     onHide={handleClose}
-    //     animation={true}
-    //     size="xl"
-    //     aria-labelledby="contained-modal-title-vcenter"
-    //     centered
-    //   >
-    //     <Modal.Header closeButton>
-    //       <Modal.Title>Add New User</Modal.Title>
-    //     </Modal.Header>
-    //     <Modal.Body>
-    //       <form className="row g-3">
-    //         <div className="col-md-6">
-    //           <label className="form-label">Email</label>
-    //           <input
-    //             type="email"
-    //             className="form-control"
-    //             value={email}
-    //             onChange={(e) => {
-    //               setEmail(e.target.value);
-    //             }}
-    //           />
-    //         </div>
-    //         <div className="col-md-6">
-    //           <label className="form-label">Password</label>
-    //           <input
-    //             type="password"
-    //             className="form-control"
-    //             value={password}
-    //             onChange={(e) => {
-    //               setPassword(e.target.value);
-    //             }}
-    //           />
-    //         </div>
-
-    //         <div className="col-md-6">
-    //           <label className="form-label">Username</label>
-    //           <input
-    //             type="text"
-    //             className="form-control"
-    //             value={username}
-    //             onChange={(e) => {
-    //               setUsername(e.target.value);
-    //             }}
-    //           />
-    //         </div>
-    //         <div className="col-md-6">
-    //           <label className="form-label">Role</label>
-    //           <select
-    //             className="form-select"
-    //             onChange={(e) => {
-    //               setRole(e.target.value);
-    //             }}
-    //           >
-    //             <option value="USER">USER</option>
-    //             <option value="ADMIN">ADMIN</option>
-    //           </select>
-    //         </div>
-
-    //         <div className="col-md-6 bg-upload">
-    //           <label className="form-label upload" htmlFor="inputUpload">
-    //             <FaCloudUploadAlt
-    //               size={"25px"}
-    //               style={{ marginRight: "8px" }}
-    //             />
-    //             Upload Avatar
-    //           </label>
-    //           <input
-    //             id="inputUpload"
-    //             type="file"
-    //             hidden
-    //             onChange={(e) => handleUploadAvatar(e)}
-    //           />
-    //         </div>
-
-    //         <div className="col-md-12 img-preview">
-    //           {preview ? <img src={preview} /> : <span>Preview Img</span>}
-    //         </div>
-    //       </form>
-    //     </Modal.Body>
-    //     <Modal.Footer>
-    //       <Button variant="secondary" onClick={handleClose}>
-    //         Close
-    //       </Button>
-    //       <Button variant="primary" onClick={handleClose}>
-    //         Save Changes
-    //       </Button>
-    //     </Modal.Footer>
-    //   </Modal>
-    // </>
   );
 };
-
-export default ModalCreateUser;

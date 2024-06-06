@@ -1,13 +1,37 @@
 .cards {
   width: 100%;
   background-color: rgb(158, 158, 158);
-//   border: none;
+  //   border: none;
   border-radius: 10px;
   height: auto;
-//   padding: 20px 10px 20px 10px;
+  //   padding: 20px 10px 20px 10px;
 }
 
 .table-responsives {
   //   border: 1px solid red;
   //   width: 900px;
+
+  .btn-edit {
+    height: 30px;
+    width: 30px;
+  }
+  tr th {
+    text-align: center;
+    color: rgb(22, 92, 162);
+  }
+  tr td {
+    text-align: center;
+  }
+  tr td:last-child {
+    text-align: center;
+    width: 180px;
+  }
+  tr td img {
+    cursor: pointer;
+    margin: 0px 10px;
+    transition: transform 0.3s ease;
+  }
+  .btn-edit:hover {
+    transform: scale(1.2);
+  }
 }

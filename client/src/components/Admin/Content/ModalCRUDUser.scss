@@ -115,6 +115,20 @@
     }
   }
 
+  .btn-update {
+    color: white;
+    background-color: #2ab300;
+    padding: 10px;
+    width: 100px;
+    border: none;
+    border-radius: 8px;
+    margin-right: 10px;
+    transition: 0.3s;
+    &:hover {
+      background-color: #249c00;
+    }
+  }
+
   .form-control {
     margin-top: 10px;
   }

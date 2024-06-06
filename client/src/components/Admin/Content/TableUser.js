@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./TableUser.scss";
 import { getListUser } from "../../../services/APIService";
-import { FaCircleInfo } from "react-icons/fa6";
+import ImgEdit from "../../../assets/edit.png";
+import ImgView from "../../../assets/view1.png";
+import ImgDelete from "../../../assets/delete.png";
 
-const TableUser = () => {
-  const [listUser, setListUser] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getListUser();
-        console.log("res", res.DT);
-        setListUser(res.DT);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fetchData();
-  }, []);
+const TableUser = (props) => {
+  const { listUser, handleEditUser } = props;
+  // console.log("table", listUser);
 
   return (
     <>
@@ -27,7 +17,7 @@ const TableUser = () => {
             <table className="table table-bordered mb-0">
               <thead>
                 <tr>
-                  <th>NO</th>
+                  <th>ID</th>
                   <th>USERNAME</th>
                   <th>EMAIL</th>
                   <th>ROLE</th>
@@ -38,21 +28,31 @@ const TableUser = () => {
                 {listUser && listUser.length > 0 ? (
                   listUser.map((item, index) => (
                     <tr key={index}>
-                      <td>{index + 1}</td>
+                      <td>{item.id}</td>
                       <td>{item.username}</td>
                       <td>{item.email}</td>
                       <td>{item.role}</td>
                       <td>
-                        <FaCircleInfo />
-
-                        <button className="btn btn-primary">Edit</button>
-                        <button className="btn btn-danger">Delete</button>
+                        <img src={ImgView} className="btn-edit" alt="View" />
+                        <img
+                          src={ImgEdit}
+                          className="btn-edit"
+                          alt="Edit"
+                          onClick={() => {
+                            handleEditUser(item);
+                          }}
+                        />
+                        <img
+                          src={ImgDelete}
+                          className="btn-edit"
+                          alt="Delete"
+                        />
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4" className="text-center">
+                    <td colSpan="5" className="text-center">
                       No data available
                     </td>
                   </tr>
