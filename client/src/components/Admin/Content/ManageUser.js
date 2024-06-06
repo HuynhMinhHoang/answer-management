@@ -3,10 +3,13 @@ import "./ManageUser.scss";
 import TableUser from "./TableUser";
 import { getListUser } from "../../../services/APIService";
 import { ModalCRUDUser } from "./ModalCRUDUser";
+import ModalViewImage from "./ModalViewImage";
 
 const ManageUser = () => {
   const [listUser, setListUser] = useState([]);
   const [dataUserEdit, setdataUserEdit] = useState(null);
+  const [dataImageUser, setDataImageUser] = useState(null);
+  const [openModal, setOpentModal] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -29,7 +32,16 @@ const ManageUser = () => {
     setdataUserEdit(null);
   };
 
-  console.log("dataUserEdit", dataUserEdit);
+  const viewImageUser = (avatar) => {
+    setDataImageUser(avatar);
+    setOpentModal(true);
+  };
+
+  const closeModal = () => {
+    setOpentModal(false);
+  };
+
+  console.log("avatar", dataImageUser);
 
   return (
     <div className="manage-user-container">
@@ -56,7 +68,19 @@ const ManageUser = () => {
           with
           <code>.table-bordered</code>.
         </p>
-        <TableUser listUser={listUser} handleEditUser={handleEditUser} />
+        <TableUser
+          listUser={listUser}
+          handleEditUser={handleEditUser}
+          viewImageUser={viewImageUser}
+        />
+      </div>
+
+      <div className="image-user">
+        <ModalViewImage
+          dataImageUser={dataImageUser}
+          openModal={openModal}
+          closeModal={closeModal}
+        />
       </div>
     </div>
   );

@@ -3,6 +3,8 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { postCreateNewUser, updateUser } from "../../../services/APIService";
 import "./ModalCRUDUser.scss";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 export const ModalCRUDUser = (props) => {
   const { fetchData, dataUserEdit, resetDataUserEdit } = props;
@@ -89,8 +91,8 @@ export const ModalCRUDUser = (props) => {
   }, [dataUserEdit]);
 
   const handleUpdateUser = async () => {
-    if (!validateEmail(email)) {
-      toast.error("Email is not valid!");
+    if (!username) {
+      toast.error("Username is not valid!");
       return;
     }
 
@@ -109,6 +111,22 @@ export const ModalCRUDUser = (props) => {
       toast.error(res.EM);
       console.log(res);
     }
+  };
+
+  const showAlert = () => {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      // showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleUpdateUser();
+      } else if (result.isDenied) {
+        toast.info("Changes are not saved!");
+      }
+    });
   };
 
   return (
@@ -210,7 +228,7 @@ export const ModalCRUDUser = (props) => {
                         <button
                           type="save"
                           className="btn-update"
-                          onClick={() => handleUpdateUser()}
+                          onClick={() => showAlert()}
                         >
                           Save
                         </button>

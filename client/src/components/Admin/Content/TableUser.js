@@ -6,7 +6,7 @@ import ImgView from "../../../assets/view1.png";
 import ImgDelete from "../../../assets/delete.png";
 
 const TableUser = (props) => {
-  const { listUser, handleEditUser } = props;
+  const { listUser, handleEditUser, viewImageUser } = props;
   // console.log("table", listUser);
 
   return (
@@ -33,7 +33,14 @@ const TableUser = (props) => {
                       <td>{item.email}</td>
                       <td>{item.role}</td>
                       <td>
-                        <img src={ImgView} className="btn-edit" alt="View" />
+                        <img
+                          src={ImgView}
+                          className="btn-edit"
+                          alt="View"
+                          onClick={() => {
+                            viewImageUser(item.image);
+                          }}
+                        />
                         <img
                           src={ImgEdit}
                           className="btn-edit"
