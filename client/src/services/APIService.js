@@ -32,9 +32,7 @@ const getListUserPaginate = (page, limit) => {
 };
 
 const loginUser = (email, password) => {
-  return axios.post("/api/v1/login", {
-    data: { email: email, password: password },
-  });
+  return axios.post("/api/v1/login", { email: email, password: password });
 };
 
 export {
