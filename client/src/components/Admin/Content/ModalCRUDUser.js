@@ -7,7 +7,14 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
 export const ModalCRUDUser = (props) => {
-  const { fetchData, dataUserEdit, resetDataUserEdit } = props;
+  const {
+    fetchData,
+    dataUserEdit,
+    resetDataUserEdit,
+    fetchDataPaginate,
+    currentPage,
+    setCurrentPage,
+  } = props;
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -55,7 +62,8 @@ export const ModalCRUDUser = (props) => {
       setPassword("");
       setAvatar("");
       setPreview("");
-      await fetchData();
+      setCurrentPage();
+      await fetchDataPaginate(1);
       toast.success(res.EM);
       console.log(res);
     } else {
@@ -103,7 +111,7 @@ export const ModalCRUDUser = (props) => {
       setPassword("");
       setAvatar("");
       setPreview("");
-      await fetchData();
+      await fetchDataPaginate(currentPage);
       resetDataUserEdit(null);
       toast.success(res.EM);
       console.log(res);
@@ -118,6 +126,7 @@ export const ModalCRUDUser = (props) => {
       title: "Do you want to save the changes?",
       showDenyButton: true,
       // showCancelButton: true,
+      icon: "warning",
       confirmButtonText: "Save",
       denyButtonText: `Don't save`,
     }).then((result) => {

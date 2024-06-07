@@ -2,9 +2,14 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -14,9 +19,9 @@ const Header = () => {
               <svg width="43" height="22" fill="none">
                 <path
                   fill="currentColor"
-                  fill-rule="evenodd"
+                  // fill-rule="evenodd"
                   d="M0 5.34C0 1.82 1.39 0 3.72 0c2.34 0 3.73 1.82 3.73 5.34V16c0 3.52-1.4 5.34-3.73 5.34S0 19.52 0 16V5.34ZM25.08 0h-7.7c-6.9 0-7.44 2.98-7.44 6.96l-.01 7.42c0 4.14.52 6.96 7.48 6.96h7.67c6.92 0 7.43-2.97 7.43-6.94V6.97c0-3.99-.53-6.97-7.43-6.97Z"
-                  clip-rule="evenodd"
+                  // clip-rule="evenodd"
                 ></path>
               </svg>
             </p>
@@ -46,7 +51,14 @@ const Header = () => {
           </Nav>
 
           <Nav>
-            <button className="btn-login">Log in</button>
+            <button
+              className="btn-login"
+              onClick={() => {
+                handleLogin();
+              }}
+            >
+              Log in
+            </button>
             <button className="btn-signup">Sign up</button>
 
             {/* <NavDropdown title="Setting" id="basic-nav-dropdown">

@@ -1,24 +1,41 @@
 import React, { useEffect, useState } from "react";
 import "./ManageUser.scss";
 import TableUser from "./TableUser";
-import { getListUser } from "../../../services/APIService";
+import { getListUser, getListUserPaginate } from "../../../services/APIService";
 import { ModalCRUDUser } from "./ModalCRUDUser";
 import ModalViewImage from "./ModalViewImage";
+import TableUserPaginate from "./TableUserPaginate";
 
 const ManageUser = () => {
+  const LIMIT_USER = 5;
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log("current page", currentPage);
+
   const [listUser, setListUser] = useState([]);
   const [dataUserEdit, setdataUserEdit] = useState(null);
   const [dataImageUser, setDataImageUser] = useState(null);
   const [openModal, setOpentModal] = useState(false);
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
+    fetchDataPaginate(currentPage);
   }, []);
 
   const fetchData = async () => {
     try {
       const res = await getListUser();
       setListUser(res.DT);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const fetchDataPaginate = async (page) => {
+    try {
+      let res = await getListUserPaginate(page, LIMIT_USER);
+      setListUser(res.DT.users);
+      setPageCount(res.DT.totalPages);
     } catch (e) {
       console.error(e);
     }
@@ -41,8 +58,6 @@ const ManageUser = () => {
     setOpentModal(false);
   };
 
-  console.log("avatar", dataImageUser);
-
   return (
     <div className="manage-user-container">
       <div className="form-add-user">
@@ -57,6 +72,9 @@ const ManageUser = () => {
           fetchData={fetchData}
           dataUserEdit={dataUserEdit}
           resetDataUserEdit={resetDataUserEdit}
+          fetchDataPaginate={fetchDataPaginate}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
 
@@ -68,10 +86,21 @@ const ManageUser = () => {
           with
           <code>.table-bordered</code>.
         </p>
-        <TableUser
+        {/* <TableUser
           listUser={listUser}
           handleEditUser={handleEditUser}
           viewImageUser={viewImageUser}
+          fetchData={fetchData}
+        /> */}
+        <TableUserPaginate
+          listUser={listUser}
+          handleEditUser={handleEditUser}
+          viewImageUser={viewImageUser}
+          fetchData={fetchData}
+          fetchDataPaginate={fetchDataPaginate}
+          pageCount={pageCount}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
 

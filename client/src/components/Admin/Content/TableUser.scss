@@ -3,13 +3,13 @@
   background-color: rgb(255, 255, 255);
   //   border: none;
   border-radius: 10px;
-  height: auto;
+  height: 400px;
   //   padding: 20px 10px 20px 10px;
 }
 
 .table-responsives {
-  //   border: 1px solid red;
-  //   width: 900px;
+  max-height: 400px;
+  overflow-y: auto;
 
   .btn-edit {
     height: 30px;
@@ -35,3 +35,38 @@
     transform: scale(1.2);
   }
 }
+
+.pagination {
+  justify-content: center;
+  margin-top: 15px;
+  padding: 20px;
+}
+
+.mb-0 {
+  // border: 1px solid red;
+  // height: 100px;
+}
+
+.table-user-container {
+  height: auto;
+  // border: 1px solid red;
+  background-color: white;
+}
+
+.active > .page-link,
+.page-link.active {
+  background-color: #bababa;
+  border: 1px solid rgb(171, 171, 171);
+}
+
+.page-link {
+  color: gray;
+
+  &:hover{
+    color: gray;
+  }
+}
+
+// .page-item .active{
+//   color: black;
+// }
