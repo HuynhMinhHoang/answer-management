@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
   ProSidebar,
@@ -23,6 +23,10 @@ import { Link } from "react-router-dom";
 import ImgAdmin from "../../assets/admin.png";
 
 const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
+  const [activeMenuItem, setActiveMenuItem] = useState(null);
+  const handleMenuItemClick = (menuItem) => {
+    setActiveMenuItem(menuItem);
+  };
   return (
     <>
       <ProSidebar
@@ -71,41 +75,51 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
         </SidebarHeader>
 
         <SidebarContent>
-          {/* menu1 */}
           <Menu iconShape="circle">
             <MenuItem
+              className={`custom-menu-item ${
+                activeMenuItem === "dashboard" ? "active" : ""
+              }`}
               icon={
                 <MdSpaceDashboard size={"20px"} color={"rgb(0, 152, 229)"} />
               }
+              onClick={() => handleMenuItemClick("dashboard")}
             >
               Dashboard
               <Link to="/admins" />
             </MenuItem>
           </Menu>
 
-          {/* menu2 */}
           <Menu iconShape="circle">
             <SubMenu
               icon={<FaTools size={"20px"} color={"rgb(0, 152, 229)"} />}
               title="Features"
             >
-              <MenuItem>
+              <MenuItem
+                className={`custom-menu-item ${
+                  activeMenuItem === "manage-users" ? "active" : ""
+                }`}
+                onClick={() => handleMenuItemClick("manage-users")}
+              >
                 Manage Users <Link to="/admins/manage-users" />
               </MenuItem>
-              <MenuItem>Manage Quizzes</MenuItem>
-              <MenuItem>Manage Questions</MenuItem>
+              <MenuItem
+                className={`custom-menu-item ${
+                  activeMenuItem === "manage-quizzes" ? "active" : ""
+                }`}
+                onClick={() => handleMenuItemClick("manage-quizzes")}
+              >
+                Manage Quizzes
+              </MenuItem>
+              <MenuItem
+                className={`custom-menu-item ${
+                  activeMenuItem === "manage-questions" ? "active" : ""
+                }`}
+                onClick={() => handleMenuItemClick("manage-questions")}
+              >
+                Manage Questions
+              </MenuItem>
             </SubMenu>
-          </Menu>
-
-          {/* menu3 */}
-          <Menu iconShape="circle">
-            <MenuItem
-              icon={
-                <MdSpaceDashboard size={"20px"} color={"rgb(0, 152, 229)"} />
-              }
-            >
-              Dashboard
-            </MenuItem>
           </Menu>
         </SidebarContent>
 

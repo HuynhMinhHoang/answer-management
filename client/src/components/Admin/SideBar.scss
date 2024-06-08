@@ -81,14 +81,44 @@
 .pro-sidebar .pro-menu:last-child {
   padding-bottom: 0;
 }
-.pro-sidebar .pro-menu:hover {
-  background-color: #cef4fc;
-}
 
 .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
   background-color: white;
+  padding-right: 24px;
 }
 
 .pro-sidebar > .pro-sidebar-inner {
   background-color: white;
+}
+
+.pro-sidebar .pro-menu-item {
+  color: #333;
+
+  &:hover {
+    background-color: #fafafa;
+    color: #8fe8fa;
+  }
+
+  &.active {
+    background-color: #cef4fc;
+    color: white;
+
+    .pro-icon-wrapper {
+      color: white;
+    }
+  }
+}
+
+.custom-menu-item {
+  color: #333;
+  transition: 0.3s;
+  &:hover {
+    background-color: #fafafa;
+  }
+
+  &.active {
+    background-color: #cef4fc;
+    border-right: 3px solid #8fe8fa;
+    box-shadow: 0 0 8px #c3ecf7;
+  }
 }

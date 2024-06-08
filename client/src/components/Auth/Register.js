@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./Login.scss";
+import "./Register.scss";
 import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
-import { loginUser } from "../../services/APIService";
+import { registerUser } from "../../services/APIService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -10,9 +10,11 @@ import "react-toastify/dist/ReactToastify.css";
 import eye1 from "../../assets/eye1.png";
 import eye2 from "../../assets/eye2.png";
 
-const Login = () => {
+const Register = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [reEnterPassword, setReEnterPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
 
   const navigate = useNavigate();
@@ -21,47 +23,65 @@ const Login = () => {
     navigate("/");
   };
 
-  const handleLogin = async () => {
-    if (!email) {
-      toast.error("Email is empty!");
-      return;
-    }
-    if (!password) {
-      toast.error("Password is empty!");
-      return;
-    }
-
-    let res = await loginUser(email, password);
-    if (res && res.EC === 0) {
-      toast.success(res.EM);
-      navigate("/");
-      console.log(res.EM);
-    } else {
-      toast.error(res.EM);
-    }
-  };
-
-  const handleRegister = () => {
-    navigate("/register");
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   const handleHidePassword = () => {
     setHidePassword(!hidePassword);
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
+  const handleRegister = async () => {
+    if (!username) {
+      toast.error("Username is empty!");
+      return;
+    }
+    if (!validateEmail(email)) {
+      toast.error("Email is not valid!");
+      return;
+    }
+    if (!password) {
+      toast.error("Password is empty!");
+      return;
+    }
+    if (password !== reEnterPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+
+    try {
+      let res = await registerUser(email, username, password);
+      if (res && res.EC === 0) {
+        toast.success(res.EM);
+        navigate("/login");
+        console.log(res.EM);
+      } else {
+        toast.error(res.EM);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
-      <div className="login-container">
+      <div className="register-container">
         <div className="login-header">
-          <p>Don't have an account yet?</p>
+          <p>Already have an account?</p>
           <button
             onClick={() => {
-              handleRegister();
+              handleLogin();
             }}
           >
-            Sign up
+            Log in
           </button>
-          <p>Contact us</p>
         </div>
 
         <div className="login-content">
@@ -96,15 +116,29 @@ const Login = () => {
                 ></path>
               </svg>
 
-              <p>Hello, who’s this?</p>
+              <p>
+                Get better data with conversational forms, surveys, quizzes &
+                more.
+              </p>
             </div>
             <div className="login-form-body">
               <div>
                 <div className="login-form-input">
-                  <label>Email</label>
+                  {/* <label>Email</label> */}
                   <input
                     type="text"
-                    placeholder="bruce@wayne.com"
+                    placeholder="Full Name"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="login-form-input">
+                  {/* <label>Email</label> */}
+                  <input
+                    type="text"
+                    placeholder="Email"
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -112,16 +146,46 @@ const Login = () => {
                   />
                 </div>
                 <div className="login-form-input">
-                  <label>Password</label>
+                  {/* <label>Password</label> */}
                   <input
                     type={hidePassword ? "password" : "text"}
-                    placeholder="At least 8 characters"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
                   />
+                  {hidePassword ? (
+                    <img
+                      src={eye1}
+                      className="eye"
+                      alt="Hide Password"
+                      onClick={() => {
+                        handleHidePassword();
+                      }}
+                    />
+                  ) : (
+                    <img
+                      src={eye2}
+                      className="eye"
+                      alt="Show Password"
+                      onClick={() => {
+                        handleHidePassword();
+                      }}
+                    />
+                  )}
+                </div>
 
+                <div className="login-form-input">
+                  {/* <label>Password</label> */}
+                  <input
+                    type={hidePassword ? "password" : "text"}
+                    placeholder="Re-enter Password"
+                    value={reEnterPassword}
+                    onChange={(e) => {
+                      setReEnterPassword(e.target.value);
+                    }}
+                  />
                   {hidePassword ? (
                     <img
                       src={eye1}
@@ -146,26 +210,11 @@ const Login = () => {
                 <div className="btn-login">
                   <button
                     onClick={() => {
-                      handleLogin();
+                      handleRegister();
                     }}
                   >
-                    Log in to Typeform
+                    Create my free account
                   </button>
-                </div>
-
-                <div className="br">
-                  <span>OR</span>
-                </div>
-
-                <div className="bg-login-or">
-                  <div className="google">
-                    <img src={google} />
-                    <p>Log in with Google</p>
-                  </div>
-                  <div className="facebook">
-                    <img src={facebook} />
-                    <p>Log in with Facebook</p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -189,4 +238,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
