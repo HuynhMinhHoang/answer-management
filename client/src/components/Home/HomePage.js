@@ -1,8 +1,16 @@
 import React from "react";
 import giftHomepage from "../../assets/gift-homepage.mp4";
 import "./HomePage.scss";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const isAuthenticated = useSelector(
+    (state) => state.userRedux.isAuthenticated
+  );
+
   return (
     <div className="homepage-container">
       <video autoPlay muted loop>
@@ -16,7 +24,13 @@ const HomePage = () => {
           designed to be refreshingly different.
         </div>
         <div className="title-3">
-          <button>Get started—it's free</button>
+          {isAuthenticated ? (
+            <button onClick={() => navigate("/users")}>Doing Quizz Now</button>
+          ) : (
+            <button onClick={() => navigate("/login")}>
+              Get started—it's free
+            </button>
+          )}
         </div>
       </div>
     </div>
