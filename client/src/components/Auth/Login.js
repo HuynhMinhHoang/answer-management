@@ -9,13 +9,18 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eye1 from "../../assets/eye1.png";
 import eye2 from "../../assets/eye2.png";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
+import { ImSpinner2 } from "react-icons/im";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const goToHome = () => {
     navigate("/");
@@ -30,14 +35,17 @@ const Login = () => {
       toast.error("Password is empty!");
       return;
     }
-
+    setIsLoading(true);
     let res = await loginUser(email, password);
     if (res && res.EC === 0) {
+      dispatch(doLogin(res));
       toast.success(res.EM);
+      setIsLoading(false);
       navigate("/");
-      console.log(res.EM);
+      // console.log(res.EM);
     } else {
       toast.error(res.EM);
+      setIsLoading(false);
     }
   };
 
@@ -148,7 +156,11 @@ const Login = () => {
                     onClick={() => {
                       handleLogin();
                     }}
+                    disabled={isLoading}
                   >
+                    {isLoading === true && (
+                      <ImSpinner2 className="loaderIcon" />
+                    )}
                     Log in to Typeform
                   </button>
                 </div>

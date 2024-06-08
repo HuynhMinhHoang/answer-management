@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import eye1 from "../../assets/eye1.png";
 import eye2 from "../../assets/eye2.png";
+import { ImSpinner2 } from "react-icons/im";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -16,6 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -58,13 +60,16 @@ const Register = () => {
     }
 
     try {
+      setIsLoading(true);
       let res = await registerUser(email, username, password);
       if (res && res.EC === 0) {
         toast.success(res.EM);
+        setIsLoading(false);
         navigate("/login");
         console.log(res.EM);
       } else {
         toast.error(res.EM);
+        setIsLoading(false);
       }
     } catch (e) {
       console.log(e);
@@ -212,7 +217,11 @@ const Register = () => {
                     onClick={() => {
                       handleRegister();
                     }}
+                    disabled={isLoading}
                   >
+                    {isLoading === true && (
+                      <ImSpinner2 className="loaderIcon" />
+                    )}
                     Create my free account
                   </button>
                 </div>

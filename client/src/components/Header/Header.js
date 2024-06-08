@@ -2,10 +2,22 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { FcBusinessman } from "react-icons/fc";
+import { FcBusinesswoman } from "react-icons/fc";
+import { doLogout } from "../../redux/action/userAction";
 
 const Header = () => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.userRedux.user);
+  const isAuthenticated = useSelector(
+    (state) => state.userRedux.isAuthenticated
+  );
+
+  const dispatch = useDispatch();
+
+  console.log("dex", user, isAuthenticated);
 
   const handleLogin = () => {
     navigate("/login");
@@ -13,6 +25,10 @@ const Header = () => {
 
   const handleRegister = () => {
     navigate("/register");
+  };
+
+  const handleLogout = () => {
+    dispatch(doLogout());
   };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -55,28 +71,42 @@ const Header = () => {
           </Nav>
 
           <Nav>
-            <button
-              className="btn-login"
-              onClick={() => {
-                handleLogin();
-              }}
-            >
-              Log in
-            </button>
-            <button
-              className="btn-signup"
-              onClick={() => {
-                handleRegister();
-              }}
-            >
-              Sign up
-            </button>
-
-            {/* <NavDropdown title="Setting" id="basic-nav-dropdown">
-              <NavDropdown.Item>Login</NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
-              <NavDropdown.Item>Profile</NavDropdown.Item>
-            </NavDropdown> */}
+            {isAuthenticated === false ? (
+              <>
+                <button
+                  className="btn-login"
+                  onClick={() => {
+                    handleLogin();
+                  }}
+                >
+                  Log in
+                </button>
+                <button
+                  className="btn-signup"
+                  onClick={() => {
+                    handleRegister();
+                  }}
+                >
+                  Sign up
+                </button>
+              </>
+            ) : (
+              <>
+                <NavDropdown title="Setting" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <FcBusinessman className="settings-icon" />
+                    <p>{user.username}</p>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    Log out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -38,23 +38,23 @@ const TableUserPaginate = (props) => {
     }
   };
 
-  // const showAlert = async (item) => {
-  //   Swal.fire({
-  //     html: `
-  //     <p style="font-size: 1.2em">Are you sure to delete user <span style="color: #cc0000; font-weight: 700">[${item.email}]</span>?</p>
-  //     <span style="margin-top: 25px; color: #be0000; font-size: 1em;">You won't be able to revert this!</span>
-  //   `,
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       handleDeleteUser(item.id);
-  //     }
-  //   });
-  // };
+  const showAlert = async (item) => {
+    Swal.fire({
+      html: `
+      <p style="font-size: 1.2em">Are you sure to delete user <span style="color: #cc0000; font-weight: 700">[${item.email}]</span>?</p>
+      <span style="margin-top: 25px; color: #be0000; font-size: 1em;">You won't be able to revert this!</span>
+    `,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleDeleteUser(item.id);
+      }
+    });
+  };
 
   return (
     <>
@@ -102,7 +102,7 @@ const TableUserPaginate = (props) => {
                             className="btn-edit"
                             alt="Delete"
                             onClick={() => {
-                              handleDeleteUser(item.id);
+                              showAlert(item);
                             }}
                           />
                         </td>

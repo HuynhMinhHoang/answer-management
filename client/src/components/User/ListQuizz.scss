@@ -1,0 +1,9 @@
+.list-quizz-container {
+  border: 1px solid red;
+  background-color: azure;
+  display: flex;
+  justify-content: space-around;
+  .card {
+    display: flex;
+  }
+}
