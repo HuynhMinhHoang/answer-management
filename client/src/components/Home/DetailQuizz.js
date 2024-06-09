@@ -13,6 +13,10 @@ const DetailQuizz = () => {
   const [dataQuizz, setDataQuizz] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
+  const handleCheckFromParent = (answerId, questionId) => {
+    console.log("Check from parent", answerId, questionId);
+  };
+
   useEffect(() => {
     const getDetailQuizz = async () => {
       try {
@@ -32,6 +36,7 @@ const DetailQuizz = () => {
                   questionDescription = item.description;
                   image = item.image;
                 }
+                item.answers.isSelected = false;
                 answer.push(item.answers);
               });
 
@@ -73,6 +78,7 @@ const DetailQuizz = () => {
           <div className="bg-question">
             {/* question */}
             <Question
+              handleCheckFromParent={handleCheckFromParent}
               currentQuestion={currentQuestion}
               data={
                 dataQuizz && dataQuizz.length > 0
@@ -103,9 +109,9 @@ const DetailQuizz = () => {
 
             <button
               className="btn-finish"
-              onClick={() => {
-                handleNext();
-              }}
+              // onClick={() => {
+              //   handleNext();
+              // }}
             >
               Finish
             </button>

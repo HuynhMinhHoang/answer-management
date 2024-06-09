@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 
 const Question = (props) => {
-  const { currentQuestion, data } = props;
+  const { currentQuestion, data, handleCheckFromParent } = props;
 
   console.log("data", data);
 
@@ -10,8 +10,9 @@ const Question = (props) => {
     return <div>Loading...</div>;
   }
 
-  const handleCheckInput = () => {
-    console.log("handleCheckInput");
+  const handleCheckInput = (e, answerId, questionId) => {
+    // console.log("handleCheckInput", e);
+    handleCheckFromParent(answerId, questionId);
   };
 
   return (
@@ -36,8 +37,12 @@ const Question = (props) => {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  onClick={() => {
-                    handleCheckInput();
+                  onClick={(e) => {
+                    handleCheckInput(
+                      e.target.checked,
+                      item.id,
+                      data.questionId
+                    );
                   }}
                 />
                 <label className="form-check-label">{item.description}</label>
