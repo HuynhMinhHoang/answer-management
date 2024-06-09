@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { getQuizzByUser } from "../../services/APIService";
 import "./ListQuizz.scss";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const ListQuizz = () => {
   const [arrQuizz, setArrayQuizz] = useState();
+
+  const navigate = useNavigate();
 
   const isAuthenticated = useSelector(
     (state) => state.userRedux.isAuthenticated
@@ -42,7 +45,18 @@ const ListQuizz = () => {
                   <div className="card-body">
                     <h5 className="card-title">Quizz {item.id}</h5>
                     <p className="card-text">{item.description}</p>
-                    <button>Start Now</button>
+                    <button
+                      onClick={() => {
+                        navigate(`/quizz/${item.id}`, {
+                          state: {
+                            quizzId: item.id,
+                            quizzTitle: item.description,
+                          },
+                        });
+                      }}
+                    >
+                      Start Now
+                    </button>
                   </div>
                 </div>
               );
