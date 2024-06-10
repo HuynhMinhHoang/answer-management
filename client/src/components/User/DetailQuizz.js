@@ -12,6 +12,8 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { toast } from "react-toastify";
 import { MdNavigateNext } from "react-icons/md";
+import { MdDone } from "react-icons/md";
+import { GrFormPrevious } from "react-icons/gr";
 
 const DetailQuizz = () => {
   const params = useParams();
@@ -162,7 +164,13 @@ const DetailQuizz = () => {
             Home Page
           </span>
           <MdNavigateNext className="icon" />
-          <span>Mini Test</span>
+          <span
+            onClick={() => {
+              navigate("/users");
+            }}
+          >
+            Mini Test
+          </span>
           <MdNavigateNext className="icon" />
           <span>Quizz {idQuizz}</span>
         </div>
@@ -197,6 +205,7 @@ const DetailQuizz = () => {
                 handlePrev();
               }}
             >
+              <MdNavigateNext className="icon-prev" />
               Previous
             </button>
 
@@ -207,6 +216,7 @@ const DetailQuizz = () => {
               }}
             >
               Next
+              <MdNavigateNext className="icon-next" />
             </button>
 
             <button
@@ -215,6 +225,7 @@ const DetailQuizz = () => {
                 showAlert();
               }}
             >
+              <MdDone className="icon-fi" />
               Finish
             </button>
           </div>

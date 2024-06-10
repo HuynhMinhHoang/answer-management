@@ -15,12 +15,19 @@
     padding: 50px;
 
     .card {
-      border: 2px solid rgb(232, 232, 232);
-      border-radius: 10px;
+      border: 1.5px solid rgb(224, 224, 224);
+      // box-shadow: 0 0 8px #abedff;
+
+      border-radius: 5px;
       width: 25%;
       padding: 30px;
       overflow: hidden;
       // height: 500px;
+      transition: 0.5s;
+
+      // &:hover {
+      //   box-shadow: 0 0 8px #d6f6ff;
+      // }
 
       .card-img-top {
         margin: 0 auto;
@@ -69,6 +76,10 @@
         }
       }
     }
+    .card:hover {
+      border: 1.5px solid rgb(246, 75, 75);
+      // transform: scale(1.05);
+    }
   }
 
   .bg-tilte {
@@ -96,7 +107,7 @@
         font-size: 25px;
         margin: 0 10px;
       }
-      span:first-child {
+      span {
         cursor: pointer;
       }
       span:last-child {

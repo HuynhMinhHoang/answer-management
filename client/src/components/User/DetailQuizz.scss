@@ -31,7 +31,7 @@
         font-size: 25px;
         margin: 0 10px;
       }
-      span:first-child {
+      span {
         cursor: pointer;
       }
       span:last-child {
@@ -61,49 +61,87 @@
       left: 50%;
       transform: translateX(-50%);
       position: absolute;
-      bottom: 40px;
+      bottom: 35px;
       text-align: center;
       //   margin-top: 20px;
       display: flex;
       justify-content: space-evenly;
       .btn-next {
-        color: white;
-        background-color: #0dcaf0;
-        padding: 10px;
-        width: 100px;
+        width: 120px;
+        height: 47px;
+        color: #ffffff;
+        background-color: #16bedf;
+        padding: 10px 10px 10px 17px;
         border: none;
         border-radius: 8px;
+        // margin-right: 30px;
         transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 16px;
+
         &:hover {
-          background-color: #0cb7d9;
+          background-color: #21adc9;
+        }
+
+        .icon-next {
+          // margin-right: 5px;
+          font-size: 25px;
+          font-weight: 700;
         }
       }
 
       .btn-finish {
-        width: 100px;
+        width: 120px;
+        height: 47px;
         color: #ffffff;
-        background-color: #d9534f;
-        padding: 10px 20px 10px 20px;
+        background-color: #1a8854;
+        padding: 10px 17px 10px 10px;
         border: none;
         border-radius: 8px;
         // margin-right: 30px;
         transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 16px;
         &:hover {
-          background-color: #d91111;
+          background-color: #157347;
+        }
+
+        .icon-fi {
+          margin-right: 5px;
+          font-size: 25px;
+          font-weight: 700;
         }
       }
 
       .btn-prev {
-        width: 100px;
-        color: #181e24;
-        background-color: #e6eaee;
-        padding: 10px 20px 10px 20px;
+        width: 120px;
+        height: 47px;
+        color: #ffffff;
+        background-color: #9b9fa4;
+        padding: 10px 20px 10px 10px;
         border: none;
         border-radius: 8px;
         // margin-right: 30px;
         transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 16px;
         &:hover {
-          background-color: #dce0e4;
+          background-color: #949697;
+        }
+
+        .icon-prev {
+          transform: rotate(180deg);
+          font-size: 25px;
+          font-weight: 700;
         }
       }
     }
