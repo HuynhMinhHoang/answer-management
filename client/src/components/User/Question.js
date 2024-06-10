@@ -4,7 +4,7 @@ import React from "react";
 const Question = (props) => {
   const { currentQuestion, data, handleCheckFromParent } = props;
 
-  console.log("data", data);
+  // console.log("data", data);
 
   if (_.isEmpty(data)) {
     return <div>Loading...</div>;
@@ -37,13 +37,14 @@ const Question = (props) => {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  onClick={(e) => {
+                  onChange={(e) => {
                     handleCheckInput(
                       e.target.checked,
                       item.id,
                       data.questionId
                     );
                   }}
+                  checked={item.isSelected}
                 />
                 <label className="form-check-label">{item.description}</label>
               </div>

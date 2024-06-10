@@ -56,6 +56,14 @@ const getDetailQuizzById = (id) => {
   return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
 };
 
+const submitQuizzFinish = (payload) => {
+  return axios.post("/api/v1/quiz-submit", payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 export {
   postCreateNewUser,
   getListUser,
@@ -66,4 +74,5 @@ export {
   registerUser,
   getQuizzByUser,
   getDetailQuizzById,
+  submitQuizzFinish,
 };

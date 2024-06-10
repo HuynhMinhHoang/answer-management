@@ -17,7 +17,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  console.log("dex", user, isAuthenticated);
+  // console.log("dex", user, isAuthenticated);
 
   const handleLogin = () => {
     navigate("/login");

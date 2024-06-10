@@ -109,7 +109,7 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                 }`}
                 onClick={() => handleMenuItemClick("manage-quizzes")}
               >
-                Manage Quizzes
+                Manage Quizzes <Link to="/admins/manage-quizz" />
               </MenuItem>
               <MenuItem
                 className={`custom-menu-item ${
