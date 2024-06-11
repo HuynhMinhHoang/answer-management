@@ -67,7 +67,7 @@ const ManageUser = () => {
           <div className="title">Add New User</div>
         )}
 
-        <p>Multiple form layouts, you can use.</p>
+        <p>Use the form below to add or update user information.</p>
         <ModalCRUDUser
           fetchData={fetchData}
           dataUserEdit={dataUserEdit}
@@ -81,10 +81,9 @@ const ManageUser = () => {
       <div className="table-user">
         <div className="title">Table User</div>
         <p>
-          Add <code>.table-bordered</code> for borders on all sides of the table
-          and cells. For Inverse Dark Table, add <code>.table-dark</code> along
-          with
-          <code>.table-bordered</code>.
+          The table below displays user information.
+          <code> Click</code> on a user to <code> edit</code> their details or
+          <code> view</code> their profile picture.
         </p>
         {/* <TableUser
           listUser={listUser}
