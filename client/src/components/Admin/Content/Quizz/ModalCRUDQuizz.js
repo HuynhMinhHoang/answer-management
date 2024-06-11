@@ -5,10 +5,12 @@ import { toast } from "react-toastify";
 import "./ModalCRUDQuizz.scss";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { createNewQuizz } from "../../../../services/APIService";
+import { createNewQuizz, updateQuizz } from "../../../../services/APIService";
 import _ from "lodash";
 
-const ModalCRUDQuizz = () => {
+const ModalCRUDQuizz = (props) => {
+  const { dataQuizzEdit, fetchListQuizz } = props;
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
@@ -22,28 +24,32 @@ const ModalCRUDQuizz = () => {
     }
   };
 
-  const handleCreateUser = async () => {
-    try {
-      if (!name) {
-        toast.error("Please enter a name!");
-        return;
-      }
-      if (!description) {
-        toast.error("Please enter a description!");
-        return;
-      }
-      if (!type) {
-        toast.error("Please enter a type!");
-        return;
-      }
-      if (_.isEmpty(preview)) {
-        toast.error("Please choose a photo for the quizz!");
-        return;
-      }
+  const handleValidation = () => {
+    if (!name) {
+      toast.error("Please enter a name!");
+      return;
+    }
+    if (!description) {
+      toast.error("Please enter a description!");
+      return;
+    }
+    if (!type) {
+      toast.error("Please enter a type!");
+      return;
+    }
+    if (_.isEmpty(preview)) {
+      toast.error("Please choose a photo for the quizz!");
+      return;
+    }
+  };
 
+  const handleCreateQuizz = async () => {
+    try {
+      handleValidation();
       let res = await createNewQuizz(description, name, type, image);
       console.log("=>>>res", res);
       if (res && res.EC === 0) {
+        await fetchListQuizz();
         toast.success(res.EM);
         setName("");
         setDescription("");
@@ -65,6 +71,59 @@ const ModalCRUDQuizz = () => {
     setPreview("");
     setImage("");
     toast.success("Reset Data Succcess!");
+  };
+
+  useEffect(() => {
+    if (dataQuizzEdit) {
+      setName(dataQuizzEdit.name);
+      setDescription(dataQuizzEdit.description);
+      setType(dataQuizzEdit.difficulty);
+      setPreview(`data:image/jpeg;base64,${dataQuizzEdit.image}`);
+    }
+  }, [dataQuizzEdit]);
+
+  const handleUpdateUQuizz = async () => {
+    handleValidation();
+    try {
+      let res = await updateQuizz(
+        dataQuizzEdit.id,
+        description,
+        name,
+        type,
+        image
+      );
+      if (res && res.EC === 0) {
+        setName("");
+        setDescription("");
+        setType("");
+        setImage("");
+        setPreview("");
+        await fetchListQuizz();
+        // resetData();
+        toast.success(res.EM);
+      } else {
+        toast.error(res.EM);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const showAlert = () => {
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      // showCancelButton: true,
+      icon: "warning",
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleUpdateUQuizz();
+      } else if (result.isDenied) {
+        toast.info("Changes are not saved!");
+      }
+    });
   };
 
   return (
@@ -153,21 +212,23 @@ const ModalCRUDQuizz = () => {
                     </div>
 
                     <div className="col-12 d-flex justify-content-end">
-                      {/* <button
-                     type="save"
-                     className="btn-update"
-                     onClick={() => showAlert()}
-                   >
-                     Save
-                   </button> */}
-
-                      <button
-                        type="save"
-                        className="btn-save"
-                        onClick={() => handleCreateUser()}
-                      >
-                        Create
-                      </button>
+                      {dataQuizzEdit ? (
+                        <button
+                          type="save"
+                          className="btn-update"
+                          onClick={() => showAlert()}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          type="save"
+                          className="btn-save"
+                          onClick={() => handleCreateQuizz()}
+                        >
+                          Create
+                        </button>
+                      )}
 
                       <button
                         type="cancel"
