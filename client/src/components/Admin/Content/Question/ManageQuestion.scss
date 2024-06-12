@@ -36,7 +36,7 @@
 
   .card-question-container {
     margin-top: 30px;
-    padding: 50px 50px;
+    padding: 50px 50px 50px 70px;
     border-radius: 10px;
     background-color: white;
     // border: 1px solid red;
@@ -82,29 +82,33 @@
 
       .bg-upload {
         margin-top: 15px;
-        margin-left: 50px;
+        margin-left: 70px;
         margin-bottom: 15px;
-        cursor: pointer;
+        // cursor: pointer;
         border: 1px solid gray;
-        padding: 8px;
-        width: 120px;
+        // width: 120px;
         display: flex;
         border-radius: 5px;
         background-color: rgb(243, 243, 243);
         border: none;
         align-items: center;
+        text-align: center;
         transition: 0.3s;
 
         label {
+          // padding: 8px;
           color: rgb(45, 45, 45);
-          font-size: 17px;
-          padding: 0 10px;
+          font-size: 20px;
+          padding: 8px 13px;
         }
         .upload {
-          cursor: pointer;
           margin: 0;
+          // border: 1px solid red;
           // margin-left: 8px;
-          // font-weight: 500;
+          cursor: pointer;
+
+          svg {
+          }
         }
       }
 
@@ -113,7 +117,7 @@
       }
 
       .bg-btn {
-        margin-left: 50px;
+        margin-left: 70px;
 
         img:first-child {
           margin-right: 20px;
@@ -189,8 +193,27 @@
         }
       }
     }
+
+    .bg-btnSave {
+      .btn-save {
+        color: white;
+        background-color: #ffca2c;
+        margin-top: 50px;
+        padding: 8px;
+        width: 100px;
+        border: none;
+        border-radius: 8px;
+        margin-right: 10px;
+        transition: 0.3s;
+        &:hover {
+          background-color: #f5b801;
+        }
+      }
+    }
   }
 }
+
+// ManageQuestion.scss
 
 // html {
 //   scrollbar-width: 5px !important;

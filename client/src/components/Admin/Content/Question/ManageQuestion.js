@@ -8,15 +8,20 @@ import ImgAddAnswer from "../../../../assets/plus.png";
 import ImgRemoveAnswer from "../../../../assets/delete-answer.png";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
+import { GrPowerReset } from "react-icons/gr";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+import Lightbox from "react-awesome-lightbox";
+import { FaImage } from "react-icons/fa";
 
 const ManageQuestion = () => {
-  const [image, setImage] = useState();
-  const [preview, setPreview] = useState();
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const [listQuizz, setListQuizz] = useState();
+  const [isPreviewImg, setIsPreviewImg] = useState(false);
+  const [dataPreviewImg, setDataPreviewImg] = useState({
+    title: "",
+    url: "",
+  });
+
   const [selectedQuizz, setSelectedQuizz] = useState({});
 
   const [question, setQuestion] = useState([
@@ -29,7 +34,9 @@ const ManageQuestion = () => {
     },
   ]);
 
-  const handleAddRemoveQuestion = (type, id) => {
+  const handleAddRemoveQuestion = async (type, id) => {
+    await alert();
+
     if (type === "ADD") {
       const newQuestion = {
         id: uuidv4(),
@@ -49,7 +56,9 @@ const ManageQuestion = () => {
     }
   };
 
-  const handleAddRemoveAnser = (type, answerId, questionId) => {
+  const handleAddRemoveAnswer = async (type, answerId, questionId) => {
+    await alert();
+
     let questionsClone = _.cloneDeep(question);
 
     if (type === "ADD") {
@@ -67,6 +76,27 @@ const ManageQuestion = () => {
       );
       setQuestion(questionsClone);
     }
+  };
+
+  const alert = () => {
+    return new Promise((resolve) => {
+      Swal.fire({
+        title: "Processing!",
+        html: "<b>Please, just a moment...</b>",
+        timer: 700,
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+        resolve();
+      });
+    });
   };
 
   const handleOnChange = (type, questionId, value) => {
@@ -115,17 +145,30 @@ const ManageQuestion = () => {
     }
   };
 
+  const handleCreateQuestionForQuizz = () => {
+    console.log("Creating Question", question);
+  };
+
+  const handlePreviewImg = (questionId) => {
+    let questionsClone = _.cloneDeep(question);
+    let index = questionsClone.findIndex((item) => item.id === questionId);
+    if (index > -1) {
+      setDataPreviewImg({
+        url: URL.createObjectURL(questionsClone[index].imageFile),
+        title: questionsClone[index].imageName,
+      });
+      setIsPreviewImg(true);
+      console.log(dataPreviewImg);
+    }
+  };
+
   return (
     <div className="manage-question-container">
       <div className="add-quizz">
         <div className="title">Add New Question Of Quizz</div>
         <div className="bg-select-question">
           <label>Select Quizz</label>
-          <Select
-            value={selectedQuizz}
-            onChange={setSelectedQuizz}
-            options={options}
-          />
+          <Select value={selectedQuizz} onChange={setSelectedQuizz} />
         </div>
 
         <div className="card-question-container">
@@ -158,16 +201,29 @@ const ManageQuestion = () => {
                     </div>
 
                     <div className="bg-upload">
-                      <label
-                        className="form-label upload"
-                        htmlFor={`${questions.id}`}
-                      >
-                        <FaCloudUploadAlt
-                          size={"23px"}
-                          style={{ marginRight: "8px" }}
-                        />
-                        {questions.imageName ? questions.imageName : "0 file"}
-                      </label>
+                      {questions.imageName ? (
+                        <label className="form-label upload">
+                          <FaImage
+                            className="viewImg"
+                            size={"27px"}
+                            // style={{ marginLeft: "30px" }}
+                            onClick={() => {
+                              handlePreviewImg(questions.id);
+                            }}
+                          />
+                        </label>
+                      ) : (
+                        <label
+                          className="form-label upload"
+                          htmlFor={`${questions.id}`}
+                        >
+                          <FaCloudUploadAlt
+                            size={"27px"}
+                            // style={{ marginRight: "8px" }}
+                          />
+                        </label>
+                      )}
+
                       <input
                         id={`${questions.id}`}
                         type="file"
@@ -242,7 +298,7 @@ const ManageQuestion = () => {
                               src={ImgAddAnswer}
                               alt="add"
                               onClick={() => {
-                                handleAddRemoveAnser("ADD", "", questions.id);
+                                handleAddRemoveAnswer("ADD", "", questions.id);
                               }}
                             />
 
@@ -251,7 +307,7 @@ const ManageQuestion = () => {
                                 src={ImgRemoveAnswer}
                                 alt="remove"
                                 onClick={() => {
-                                  handleAddRemoveAnser(
+                                  handleAddRemoveAnswer(
                                     "REMOVE",
                                     answer.id,
                                     questions.id
@@ -263,6 +319,28 @@ const ManageQuestion = () => {
                         </div>
                       );
                     })}
+
+                  {questions.answer && questions.answer.length > 0 && (
+                    <div className="bg-btnSave">
+                      <button
+                        type="save"
+                        className="btn-save"
+                        onClick={() => handleCreateQuestionForQuizz()}
+                      >
+                        Create
+                      </button>
+                    </div>
+                  )}
+
+                  {isPreviewImg === true && (
+                    <Lightbox
+                      image={dataPreviewImg.url}
+                      title={dataPreviewImg.title}
+                      onClose={() => {
+                        setIsPreviewImg(false);
+                      }}
+                    ></Lightbox>
+                  )}
                 </div>
               );
             })}
