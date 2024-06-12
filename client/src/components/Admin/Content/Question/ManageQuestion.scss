@@ -18,9 +18,9 @@
     margin-top: 20px;
     label {
       font-weight: 600;
-      font-size: 1.25rem;
-      color: #700000;
-      margin-bottom: 15px;
+      font-size: 18px;
+      color: gray;
+      margin-bottom: 10px;
     }
     // input {
     //   width: 400px !important;
@@ -36,13 +36,25 @@
 
   .card-question-container {
     margin-top: 30px;
-    padding: 40px 100px;
+    padding: 50px 50px;
     border-radius: 10px;
     background-color: white;
     // border: 1px solid red;
     // width: 50%;
     height: auto;
     // width: ;
+
+    .bg-tilte {
+      //   border: 1px solid red;
+      margin-bottom: 30px;
+      text-align: center;
+      label {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: rgb(29, 121, 212);
+      }
+    }
 
     .main:not(:first-of-type) {
       margin-top: 40px;
@@ -53,12 +65,6 @@
         width: 1000px;
       }
     }
-    label:first-child {
-      font-weight: 600;
-      font-size: 1.25rem;
-      color: #700000;
-      margin-bottom: 10px;
-    }
 
     .card-question {
       display: flex;
@@ -67,14 +73,21 @@
       align-items: center;
       height: 50px;
 
+      p {
+        color: #390083;
+        font-weight: 700;
+        margin: 0;
+        margin-right: 10px;
+      }
+
       .bg-upload {
         margin-top: 15px;
-        margin-left: 60px;
+        margin-left: 50px;
         margin-bottom: 15px;
         cursor: pointer;
         border: 1px solid gray;
         padding: 8px;
-        width: auto;
+        width: 120px;
         display: flex;
         border-radius: 5px;
         background-color: rgb(243, 243, 243);
@@ -100,7 +113,8 @@
       }
 
       .bg-btn {
-        margin-left: 60px;
+        margin-left: 50px;
+
         img:first-child {
           margin-right: 20px;
         }
@@ -125,7 +139,7 @@
       align-items: center;
       margin-top: 30px;
 
-      .bg-anwser {
+      .bg-answer {
         display: flex;
         // justify-content: center;
         align-items: center;
@@ -152,7 +166,7 @@
       }
 
       .bg-btn-answer {
-        margin-left: 30px;
+        margin-left: 40px;
         display: flex;
         // justify-content: space-between;
         align-items: center;

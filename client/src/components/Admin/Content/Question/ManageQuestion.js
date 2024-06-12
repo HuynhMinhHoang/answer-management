@@ -23,7 +23,8 @@ const ManageQuestion = () => {
     {
       id: uuidv4(),
       description: "",
-      image: "",
+      imageFile: "",
+      imageName: "",
       answer: [{ id: uuidv4(), description: "", isCorrect: false }],
     },
   ]);
@@ -33,7 +34,8 @@ const ManageQuestion = () => {
       const newQuestion = {
         id: uuidv4(),
         description: "",
-        image: "",
+        imageFile: "",
+        imageName: "",
         answer: [{ id: uuidv4(), description: "", isCorrect: false }],
       };
 
@@ -47,7 +49,7 @@ const ManageQuestion = () => {
     }
   };
 
-  const handleAddRemoveAnser = (type, anwserId, questionId) => {
+  const handleAddRemoveAnser = (type, answerId, questionId) => {
     let questionsClone = _.cloneDeep(question);
 
     if (type === "ADD") {
@@ -61,7 +63,53 @@ const ManageQuestion = () => {
     if (type === "REMOVE") {
       let index = questionsClone.findIndex((item) => item.id === questionId);
       questionsClone[index].answer = questionsClone[index].answer.filter(
-        (item) => item.id !== anwserId
+        (item) => item.id !== answerId
+      );
+      setQuestion(questionsClone);
+    }
+  };
+
+  const handleOnChange = (type, questionId, value) => {
+    if (type === "QUESTION") {
+      let questionsClone = _.cloneDeep(question);
+      let index = questionsClone.findIndex((item) => item.id === questionId);
+      if (index > -1) {
+        questionsClone[index].description = value;
+        setQuestion(questionsClone);
+      }
+    }
+  };
+
+  const handleOnChangeFileImgQuestion = (questionId, e) => {
+    let questionsClone = _.cloneDeep(question);
+
+    let index = questionsClone.findIndex((item) => item.id === questionId);
+
+    if (index > -1 && e.target && e.target.files && e.target.files[0]) {
+      questionsClone[index].imageFile = e.target.files[0];
+      questionsClone[index].imageName = e.target.files[0].name;
+      setQuestion(questionsClone);
+      console.log(questionsClone);
+    }
+  };
+
+  const handleCheckboxAnswer = (type, answerId, questionId, e) => {
+    let questionsClone = _.cloneDeep(question);
+    let index = questionsClone.findIndex((item) => item.id === questionId);
+    if (index > -1) {
+      questionsClone[index].answer = questionsClone[index].answer.map(
+        (answer) => {
+          if (answer.id === answerId) {
+            // Use === for comparison
+            if (type === "CHECKBOX") {
+              answer.isCorrect = e;
+            }
+            if (type === "INPUT") {
+              answer.description = e;
+            }
+          }
+          return answer;
+        }
       );
       setQuestion(questionsClone);
     }
@@ -72,7 +120,7 @@ const ManageQuestion = () => {
       <div className="add-quizz">
         <div className="title">Add New Question Of Quizz</div>
         <div className="bg-select-question">
-          <label>Select quizz</label>
+          <label>Select Quizz</label>
           <Select
             value={selectedQuizz}
             onChange={setSelectedQuizz}
@@ -81,7 +129,9 @@ const ManageQuestion = () => {
         </div>
 
         <div className="card-question-container">
-          <label>Add question</label>
+          <div className="bg-tilte">
+            <label>Add question</label>
+          </div>
 
           {question &&
             question &&
@@ -89,15 +139,20 @@ const ManageQuestion = () => {
               return (
                 <div key={index} className="main">
                   <div className="card-question">
-                    {/* <p>{index + 1}</p> */}
+                    <p>Question {index + 1}</p>
                     <div className="form-group">
-                      {/* <label>Description</label> */}
                       <input
                         type="text"
                         className="form-control"
-                        placeholder={`Question Description ${index + 1}`}
+                        placeholder={`Description`}
                         value={questions.description}
-                        // onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e) =>
+                          handleOnChange(
+                            "QUESTION",
+                            questions.id,
+                            e.target.value
+                          )
+                        }
                         // disabled={dataUserEdit ? true : false}
                       />
                     </div>
@@ -105,19 +160,21 @@ const ManageQuestion = () => {
                     <div className="bg-upload">
                       <label
                         className="form-label upload"
-                        htmlFor="inputUpload"
+                        htmlFor={`${questions.id}`}
                       >
                         <FaCloudUploadAlt
                           size={"23px"}
                           style={{ marginRight: "8px" }}
                         />
-                        Image
+                        {questions.imageName ? questions.imageName : "0 file"}
                       </label>
                       <input
-                        id="inputUpload"
+                        id={`${questions.id}`}
                         type="file"
                         hidden
-                        // onChange={(e) => handleUploadAvatar(e)}
+                        onChange={(e) =>
+                          handleOnChangeFileImgQuestion(questions.id, e)
+                        }
                       />
                     </div>
                     <div className="bg-btn">
@@ -146,9 +203,21 @@ const ManageQuestion = () => {
                     questions.answer.map((answer, index) => {
                       return (
                         <div key={index} className="answer-container">
-                          <div className="bg-anwser">
+                          <div className="bg-answer">
                             <div className="bg-checkbox">
-                              <input className="checkbox" type="checkbox" />
+                              <input
+                                className="checkbox"
+                                type="checkbox"
+                                checked={answer.isCorrect}
+                                onChange={(e) => {
+                                  handleCheckboxAnswer(
+                                    "CHECKBOX",
+                                    answer.id,
+                                    questions.id,
+                                    e.target.checked
+                                  );
+                                }}
+                              />
                             </div>
                             <div className="form-group">
                               {/* <label>Description</label> */}
@@ -157,8 +226,14 @@ const ManageQuestion = () => {
                                 className="form-control"
                                 placeholder={`Answer ${index + 1}`}
                                 value={answer.description}
-                                // onChange={(e) => setDescription(e.target.value)}
-                                // disabled={dataUserEdit ? true : false}
+                                onChange={(e) => {
+                                  handleCheckboxAnswer(
+                                    "INPUT",
+                                    answer.id,
+                                    questions.id,
+                                    e.target.value
+                                  );
+                                }}
                               />
                             </div>
                           </div>
