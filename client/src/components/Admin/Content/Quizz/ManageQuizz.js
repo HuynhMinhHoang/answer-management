@@ -38,7 +38,7 @@ const ManageQuizz = () => {
         <div className="title">Table List Quizz</div>
         <p>
           The table below displays quizz information.
-          <code> Click</code> on a user to <code> edit</code> their details or
+          <code> Click</code> on a quizz to <code> edit</code> their details or
           <code> view</code> their profile picture.
         </p>
         <TableListQuizz

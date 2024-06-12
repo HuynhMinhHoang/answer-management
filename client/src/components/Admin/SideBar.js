@@ -113,11 +113,11 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
               </MenuItem>
               <MenuItem
                 className={`custom-menu-item ${
-                  activeMenuItem === "manage-questions" ? "active" : ""
+                  activeMenuItem === "manage-question" ? "active" : ""
                 }`}
-                onClick={() => handleMenuItemClick("manage-questions")}
+                onClick={() => handleMenuItemClick("manage-question")}
               >
-                Manage Questions
+                Manage Questions <Link to="/admins/manage-question" />
               </MenuItem>
             </SubMenu>
           </Menu>
