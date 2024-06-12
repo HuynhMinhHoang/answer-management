@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ManageQuestion.scss";
 import Select from "react-select";
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -7,23 +7,27 @@ import ImgRemove from "../../../../assets/remove.png";
 import ImgAddAnswer from "../../../../assets/plus.png";
 import ImgRemoveAnswer from "../../../../assets/delete-answer.png";
 import { v4 as uuidv4 } from "uuid";
-import _ from "lodash";
+import _, { create } from "lodash";
 import { GrPowerReset } from "react-icons/gr";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Lightbox from "react-awesome-lightbox";
 import { FaImage } from "react-icons/fa";
+import {
+  getListQuizz,
+  createNewQuestionForQuizz,
+  createNewAnswerForQuestion,
+} from "../../../../services/APIService";
 
 const ManageQuestion = () => {
-  const [listQuizz, setListQuizz] = useState();
+  const [listQuizz, setListQuizz] = useState([]);
+  const [selectedQuizz, setSelectedQuizz] = useState({});
+
   const [isPreviewImg, setIsPreviewImg] = useState(false);
   const [dataPreviewImg, setDataPreviewImg] = useState({
     title: "",
     url: "",
   });
-
-  const [selectedQuizz, setSelectedQuizz] = useState({});
-
   const [question, setQuestion] = useState([
     {
       id: uuidv4(),
@@ -33,6 +37,25 @@ const ManageQuestion = () => {
       answer: [{ id: uuidv4(), description: "", isCorrect: false }],
     },
   ]);
+
+  useEffect(() => {
+    fetchListQuizz();
+  }, []);
+
+  const fetchListQuizz = async () => {
+    try {
+      let res = await getListQuizz();
+      let newQuizz = res.DT.map((item) => {
+        return {
+          value: item.id,
+          label: `${item.id} - ${item.description}`,
+        };
+      });
+      setListQuizz(newQuizz);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleAddRemoveQuestion = async (type, id) => {
     await alert();
@@ -145,8 +168,21 @@ const ManageQuestion = () => {
     }
   };
 
-  const handleCreateQuestionForQuizz = () => {
-    console.log("Creating Question", question);
+  const handleCreateQuestionForQuizz = async () => {
+    //validate
+
+    //submit question
+    await Promise.all(
+      question.map(async (questions) => {
+        const q = await createNewQuestionForQuizz(
+          +selectedQuizz.value,
+          questions.description,
+          questions.imageFile
+        );
+      })
+    );
+
+    //submit answer
   };
 
   const handlePreviewImg = (questionId) => {
@@ -168,7 +204,11 @@ const ManageQuestion = () => {
         <div className="title">Add New Question Of Quizz</div>
         <div className="bg-select-question">
           <label>Select Quizz</label>
-          <Select value={selectedQuizz} onChange={setSelectedQuizz} />
+          <Select
+            options={listQuizz}
+            defaultValue={selectedQuizz}
+            onChange={setSelectedQuizz}
+          />
         </div>
 
         <div className="card-question-container">
@@ -320,18 +360,6 @@ const ManageQuestion = () => {
                       );
                     })}
 
-                  {questions.answer && questions.answer.length > 0 && (
-                    <div className="bg-btnSave">
-                      <button
-                        type="save"
-                        className="btn-save"
-                        onClick={() => handleCreateQuestionForQuizz()}
-                      >
-                        Create
-                      </button>
-                    </div>
-                  )}
-
                   {isPreviewImg === true && (
                     <Lightbox
                       image={dataPreviewImg.url}
@@ -344,6 +372,17 @@ const ManageQuestion = () => {
                 </div>
               );
             })}
+          {question.length > 0 && (
+            <div className="bg-btnSave">
+              <button
+                type="save"
+                className="btn-save"
+                onClick={handleCreateQuestionForQuizz}
+              >
+                Create
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
