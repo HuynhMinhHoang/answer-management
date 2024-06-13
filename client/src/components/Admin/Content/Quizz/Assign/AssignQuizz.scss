@@ -1,0 +1,55 @@
+.manage-assign-container {
+  width: 100%;
+  // border: 1px solid red;
+  padding: 30px 30px 30px 30px;
+  //   display: flex;
+  //   justify-content: center;
+  //   overflow-y: scroll;
+  //   margin: 0;
+  .title {
+    // margin-top: 20px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #25396f;
+    // text-transform: uppercase;
+  }
+
+  .add-assign {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .bg-select-question {
+      margin-top: 20px;
+      label {
+        font-weight: 600;
+        font-size: 18px;
+        color: gray;
+        margin-bottom: 10px;
+      }
+      .css-b62m3t-container {
+        width: 650px;
+
+      }
+      // input {
+      // }
+    }
+  }
+
+  .bg-btnSave {
+    text-align: center;
+    .btn-save {
+      color: white;
+      background-color: #ffca2c;
+      margin-top: 70px;
+      padding: 8px;
+      width: 150px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      transition: 0.3s;
+      &:hover {
+        background-color: #f5b801;
+      }
+    }
+  }
+}

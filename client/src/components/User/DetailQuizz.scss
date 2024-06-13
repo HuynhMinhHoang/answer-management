@@ -61,7 +61,7 @@
       left: 50%;
       transform: translateX(-50%);
       position: absolute;
-      bottom: 35px;
+      bottom: 30px;
       text-align: center;
       //   margin-top: 20px;
       display: flex;
@@ -168,8 +168,14 @@
 
       .bg-img {
         text-align: center;
-        margin: 35px 0;
-
+        margin: 0 auto;
+        margin-top: 25px;
+        // border: 1px solid red;
+        height: 300px;
+        width: auto;
+        color: gray;
+        font-weight: 600;
+        font-size: 18px;
         img {
           width: 40%;
           height: 100%;

@@ -19,6 +19,7 @@ import ListQuizz from "./components/User/ListQuizz";
 import DetailQuizz from "./components/User/DetailQuizz";
 import ManageQuizz from "./components/Admin/Content/Quizz/ManageQuizz";
 import ManageQuestion from "./components/Admin/Content/Question/ManageQuestion";
+import AssignQuizz from "./components/Admin/Content/Quizz/Assign/AssignQuizz";
 
 const Layout = () => {
   const NotFound = () => {
@@ -43,6 +44,7 @@ const Layout = () => {
           <Route path="manage-users" element={<ManageUser />} />
           <Route path="manage-quizz" element={<ManageQuizz />} />
           <Route path="manage-question" element={<ManageQuestion />} />
+          <Route path="manage-assign-quizz" element={<AssignQuizz />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

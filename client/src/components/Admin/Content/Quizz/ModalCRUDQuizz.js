@@ -9,7 +9,7 @@ import { createNewQuizz, updateQuizz } from "../../../../services/APIService";
 import _ from "lodash";
 
 const ModalCRUDQuizz = (props) => {
-  const { dataQuizzEdit, fetchListQuizz } = props;
+  const { dataQuizzEdit, fetchListQuizz, setDataQuizzEdit } = props;
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -65,6 +65,7 @@ const ModalCRUDQuizz = (props) => {
   };
 
   const resetData = () => {
+    setDataQuizzEdit(null);
     setName("");
     setDescription("");
     setType("");

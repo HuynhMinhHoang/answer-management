@@ -13,13 +13,25 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Lightbox from "react-awesome-lightbox";
 import { FaImage } from "react-icons/fa";
+
 import {
   getListQuizz,
   createNewQuestionForQuizz,
   createNewAnswerForQuestion,
 } from "../../../../services/APIService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ManageQuestion = () => {
+  const initQuestion = [
+    {
+      id: uuidv4(),
+      description: "",
+      imageFile: "",
+      imageName: "",
+      answer: [{ id: uuidv4(), description: "", isCorrect: false }],
+    },
+  ];
   const [listQuizz, setListQuizz] = useState([]);
   const [selectedQuizz, setSelectedQuizz] = useState({});
 
@@ -28,15 +40,7 @@ const ManageQuestion = () => {
     title: "",
     url: "",
   });
-  const [question, setQuestion] = useState([
-    {
-      id: uuidv4(),
-      description: "",
-      imageFile: "",
-      imageName: "",
-      answer: [{ id: uuidv4(), description: "", isCorrect: false }],
-    },
-  ]);
+  const [question, setQuestion] = useState(initQuestion);
 
   useEffect(() => {
     fetchListQuizz();
@@ -168,8 +172,83 @@ const ManageQuestion = () => {
     }
   };
 
+  const validateCheckboxes = (questions) => {
+    for (let i = 0; i < questions.length; i++) {
+      const hasCorrectAnswer = questions[i].answer.some(
+        (answer) => answer.isCorrect
+      );
+      if (!hasCorrectAnswer) {
+        return { isValid: false, questionIndex: i };
+      }
+    }
+    return { isValid: true };
+  };
+
   const handleCreateQuestionForQuizz = async () => {
     //validate
+    if (_.isEmpty(selectedQuizz)) {
+      toast.error("Please choose a quizz!");
+      return;
+    }
+
+    //validate questions
+    let isValidateQuestion = true;
+    let indexQ2 = 0;
+    for (let i = 0; i < question.length; i++) {
+      if (!question[i].description) {
+        isValidateQuestion = false;
+        indexQ2 = i;
+        break;
+      }
+    }
+    if (isValidateQuestion === false) {
+      toast.error(
+        <div>
+          Please not empty description for
+          <b style={{ color: "#E74C3C" }}> Question {indexQ2 + 1}</b>!
+        </div>
+      );
+      return;
+    }
+
+    //validate answers
+    let isValidateAnswer = true;
+    let indexQ1 = 0,
+      indexA = 0;
+    for (let i = 0; i < question.length; i++) {
+      for (let j = 0; j < question[i].answer.length; j++) {
+        if (!question[i].answer[j].description) {
+          isValidateAnswer = false;
+          indexA = j;
+          indexQ1 = i;
+
+          break;
+        }
+      }
+      if (isValidateAnswer === false) break;
+    }
+    if (isValidateAnswer === false) {
+      toast.error(
+        <div>
+          Please not empty
+          <b style={{ color: "#E74C3C" }}> Answer {indexA + 1}</b> at
+          <b style={{ color: "#E74C3C" }}> Question {indexQ1 + 1}</b>!
+        </div>
+      );
+      return;
+    }
+
+    //validate checkboxes
+    const { isValid, questionIndex } = validateCheckboxes(question);
+    if (!isValid) {
+      toast.error(
+        <div>
+          Please select at least one correct answer for
+          <b style={{ color: "#E74C3C" }}> Question {questionIndex + 1}</b>!
+        </div>
+      );
+      return;
+    }
 
     //submit question
     await Promise.all(
@@ -179,10 +258,22 @@ const ManageQuestion = () => {
           questions.description,
           questions.imageFile
         );
+
+        //submit answer
+        await Promise.all(
+          questions.answer.map(async (answers) => {
+            await createNewAnswerForQuestion(
+              answers.description,
+              answers.isCorrect,
+              q.DT.id
+            );
+          })
+        );
       })
     );
 
-    //submit answer
+    toast.success("Create question successfully!");
+    setQuestion(initQuestion);
   };
 
   const handlePreviewImg = (questionId) => {

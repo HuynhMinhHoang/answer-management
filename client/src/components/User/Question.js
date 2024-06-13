@@ -22,7 +22,7 @@ const Question = (props) => {
           <img src={`data:image/jpeg;base64,${data.image}`} alt="img" />
         </div>
       ) : (
-        <div className="bg-img"></div>
+        <div className="bg-img">No photos to show...</div>
       )}
       <h5>
         Question {currentQuestion + 1}: {data.questionDescription}

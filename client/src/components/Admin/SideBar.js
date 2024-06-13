@@ -21,6 +21,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImgAdmin from "../../assets/admin.png";
+import { FaKey } from "react-icons/fa";
 
 const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
@@ -120,6 +121,19 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                 Manage Questions <Link to="/admins/manage-question" />
               </MenuItem>
             </SubMenu>
+          </Menu>
+
+          <Menu iconShape="circle">
+            <MenuItem
+              className={`custom-menu-item ${
+                activeMenuItem === "assign-quizz" ? "active" : ""
+              }`}
+              icon={<FaKey size={"20px"} color={"rgb(0, 152, 229)"} />}
+              onClick={() => handleMenuItemClick("assign-quizz")}
+            >
+              Assign Quizz
+              <Link to="/admins/manage-assign-quizz" />
+            </MenuItem>
           </Menu>
         </SidebarContent>
 

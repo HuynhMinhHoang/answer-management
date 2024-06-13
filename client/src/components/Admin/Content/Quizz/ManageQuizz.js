@@ -32,6 +32,7 @@ const ManageQuizz = () => {
         <ModalCRUDQuizz
           dataQuizzEdit={dataQuizzEdit}
           fetchListQuizz={fetchListQuizz}
+          setDataQuizzEdit={setDataQuizzEdit}
         />
       </div>
       <div className="table-quizz">
