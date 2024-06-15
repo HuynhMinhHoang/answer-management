@@ -122,6 +122,10 @@ const getQuizzByQuestionAnswer = (id) => {
   return axios.get(`/api/v1/quiz-with-qa/${id}`);
 };
 
+const updateQuizzByQuestionAnswer = (data) => {
+  return axios.post(`api/v1/quiz-upsert-qa`, { ...data });
+};
+
 export {
   postCreateNewUser,
   getListUser,
@@ -141,4 +145,5 @@ export {
   createNewAnswerForQuestion,
   acceptAssignQuizz,
   getQuizzByQuestionAnswer,
+  updateQuizzByQuestionAnswer,
 };

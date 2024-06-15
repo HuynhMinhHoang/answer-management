@@ -13,7 +13,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import { toast } from "react-toastify";
 import { MdNavigateNext } from "react-icons/md";
 import { MdDone } from "react-icons/md";
-import { GrFormPrevious } from "react-icons/gr";
+import ModalCountDownQuizz from "./ModalCountDownQuizz.js";
 
 const DetailQuizz = () => {
   const params = useParams();
@@ -230,7 +230,9 @@ const DetailQuizz = () => {
             </button>
           </div>
         </div>
-        <div className="bg-right">count down</div>
+        <div className="bg-right">
+          <ModalCountDownQuizz dataQuizz={dataQuizz} />
+        </div>
       </div>
 
       <ModalResultQuizz

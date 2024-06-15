@@ -210,6 +210,23 @@
         }
       }
     }
+
+    .bg-btnCreate {
+      .btn-create {
+        color: white;
+        background-color: #0dcaf0;
+        margin-top: 50px;
+        padding: 8px;
+        width: 150px;
+        border: none;
+        border-radius: 8px;
+        margin-right: 10px;
+        transition: 0.3s;
+        &:hover {
+          background-color: #0bb7d9;
+        }
+      }
+    }
   }
 }
 

@@ -13,7 +13,10 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Lightbox from "react-awesome-lightbox";
 import { FaImage } from "react-icons/fa";
-import { getQuizzByQuestionAnswer } from "../../../../services/APIService";
+import {
+  getQuizzByQuestionAnswer,
+  updateQuizzByQuestionAnswer,
+} from "../../../../services/APIService";
 
 import {
   getListQuizz,
@@ -353,7 +356,102 @@ const ManageQuestion = () => {
     }
   };
 
-  const handleUpdateQuestionForQuizz = () => {};
+  const handleUpdateQuestionForQuizz = async () => {
+    //validate
+    if (_.isEmpty(selectedQuizz)) {
+      toast.error("Please choose a quizz!");
+      return;
+    }
+
+    //validate questions
+    let isValidateQuestion = true;
+    let indexQ2 = 0;
+    for (let i = 0; i < question.length; i++) {
+      if (!question[i].description) {
+        isValidateQuestion = false;
+        indexQ2 = i;
+        break;
+      }
+    }
+    if (isValidateQuestion === false) {
+      toast.error(
+        <div>
+          Please not empty description for
+          <b style={{ color: "#E74C3C" }}> Question {indexQ2 + 1}</b>!
+        </div>
+      );
+      return;
+    }
+
+    //validate answers
+    let isValidateAnswer = true;
+    let indexQ1 = 0,
+      indexA = 0;
+    for (let i = 0; i < question.length; i++) {
+      for (let j = 0; j < question[i].answer.length; j++) {
+        if (!question[i].answer[j].description) {
+          isValidateAnswer = false;
+          indexA = j;
+          indexQ1 = i;
+
+          break;
+        }
+      }
+      if (isValidateAnswer === false) break;
+    }
+    if (isValidateAnswer === false) {
+      toast.error(
+        <div>
+          Please not empty
+          <b style={{ color: "#E74C3C" }}> Answer {indexA + 1}</b> at
+          <b style={{ color: "#E74C3C" }}> Question {indexQ1 + 1}</b>!
+        </div>
+      );
+      return;
+    }
+
+    //validate checkboxes
+    const { isValid, questionIndex } = validateCheckboxes(question);
+    if (!isValid) {
+      toast.error(
+        <div>
+          Please select at least one correct answer for
+          <b style={{ color: "#E74C3C" }}> Question {questionIndex + 1}</b>!
+        </div>
+      );
+      return;
+    }
+    let questionClone = _.cloneDeep(question);
+    for (let i = 0; i < questionClone.length; i++) {
+      if (questionClone[i].imageFile) {
+        questionClone[i].imageFile = await toBase64(questionClone[i].imageFile);
+      }
+      questionClone[i].answers = questionClone[i].answer;
+      delete questionClone[i].answer;
+    }
+
+    console.log("=>>", selectedQuizz.value, questionClone);
+
+    let res = await updateQuizzByQuestionAnswer({
+      quizId: selectedQuizz.value,
+      questions: questionClone,
+    });
+    console.log(res);
+    if (res && res.EC === 0) {
+      toast.success("Save question successfully!");
+      setQuestion(initQuestion);
+    } else {
+      toast.error(res.EM);
+    }
+  };
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
 
   return (
     <div className="manage-question-container">
@@ -531,10 +629,10 @@ const ManageQuestion = () => {
             })}
 
           {mode === "create" ? (
-            <div className="bg-btnSave">
+            <div className="bg-btnCreate">
               <button
                 type="save"
-                className="btn-save"
+                className="btn-create"
                 onClick={handleCreateQuestionForQuizz}
               >
                 Create Question

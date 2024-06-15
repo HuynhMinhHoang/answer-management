@@ -21,8 +21,8 @@
     .tilte {
       display: flex;
       align-items: center;
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 500;
       color: #545454;
       /* display: inline; */
       border-radius: 5px;
@@ -42,7 +42,7 @@
   .bg {
     // padding: 50px 300px;
     margin-top: 20px;
-    height: 750px;
+    height: 850px;
     display: flex;
     justify-content: space-between;
     // box-shadow: 0 0 8px rgb(232, 232, 232);
@@ -219,9 +219,13 @@
   }
 
   .bg-right {
-    border: 1px solid rgb(64, 0, 255);
-    width: 30%;
-    padding: 20px;
+    border: 1px solid rgb(214, 214, 214);
+    // box-shadow: 0 0 80px rgb(223, 223, 223);
+
+    border-radius: 10px;
+    width: 27%;
+    // padding: 20px;
+    // margin: 30px;
   }
 }
 

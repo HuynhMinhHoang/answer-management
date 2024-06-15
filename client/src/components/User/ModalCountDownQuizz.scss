@@ -1,0 +1,47 @@
+.countdown-container {
+  .time {
+    text-align: center;
+    margin: 0px 0px 20px 0px;
+    font-size: 47px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    background-color: rgb(181, 181, 181);
+    color: white;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .bg-number {
+    margin: 30px 30px 30px 37px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 10px;
+
+    .number {
+      border: 1px solid rgb(196, 196, 196);
+      width: 55px;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 20px;
+      color: rgb(18, 18, 18);
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 5px;
+
+      span {
+        margin: 0;
+      }
+
+      &:hover {
+        background-color: rgb(247, 247, 247);
+        color: red;
+      }
+    }
+  }
+}
