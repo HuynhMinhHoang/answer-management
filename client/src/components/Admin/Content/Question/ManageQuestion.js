@@ -13,6 +13,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import Lightbox from "react-awesome-lightbox";
 import { FaImage } from "react-icons/fa";
+import { getQuizzByQuestionAnswer } from "../../../../services/APIService";
 
 import {
   getListQuizz,
@@ -32,6 +33,7 @@ const ManageQuestion = () => {
       answer: [{ id: uuidv4(), description: "", isCorrect: false }],
     },
   ];
+
   const [listQuizz, setListQuizz] = useState([]);
   const [selectedQuizz, setSelectedQuizz] = useState({});
 
@@ -42,9 +44,71 @@ const ManageQuestion = () => {
   });
   const [question, setQuestion] = useState(initQuestion);
 
+  const [mode, setMode] = useState("create");
+
   useEffect(() => {
     fetchListQuizz();
   }, []);
+
+  useEffect(() => {
+    if (selectedQuizz && selectedQuizz.value) {
+      fetchQuizzByQA();
+    }
+  }, [selectedQuizz]);
+
+  const urltoFile = (url, filename, mimeType) => {
+    if (url.startsWith("data:")) {
+      var arr = url.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[arr.length - 1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      var file = new File([u8arr], filename, { type: mime || mimeType });
+      return Promise.resolve(file);
+    }
+    return fetch(url)
+      .then((res) => res.arrayBuffer())
+      .then((buf) => new File([buf], filename, { type: mimeType }));
+  };
+
+  const fetchQuizzByQA = async () => {
+    let res = await getQuizzByQuestionAnswer(selectedQuizz.value);
+    if (res && res.EC === 0) {
+      if (res.DT.qa && res.DT.qa.length > 0) {
+        const fetchedQuestions = await Promise.all(
+          res.DT.qa.map(async (item) => {
+            let imageFile = null;
+            if (item.imageFile) {
+              imageFile = await urltoFile(
+                `data:image/png;base64,${item.imageFile}`,
+                `Question-${item.id}.png`,
+                `image/png`
+              );
+            }
+            return {
+              id: item.id,
+              description: item.description,
+              imageFile: imageFile,
+              imageName: item.imageFile ? `Question-${item.id}.png` : "",
+              answer: item.answers.map((ans) => ({
+                id: ans.id,
+                description: ans.description,
+                isCorrect: ans.isCorrect,
+              })),
+            };
+          })
+        );
+        setQuestion(fetchedQuestions);
+        setMode("update");
+      } else {
+        setQuestion(initQuestion);
+        setMode("create");
+      }
+    }
+  };
 
   const fetchListQuizz = async () => {
     try {
@@ -289,6 +353,8 @@ const ManageQuestion = () => {
     }
   };
 
+  const handleUpdateQuestionForQuizz = () => {};
+
   return (
     <div className="manage-question-container">
       <div className="add-quizz">
@@ -463,14 +529,25 @@ const ManageQuestion = () => {
                 </div>
               );
             })}
-          {question.length > 0 && (
+
+          {mode === "create" ? (
             <div className="bg-btnSave">
               <button
                 type="save"
                 className="btn-save"
                 onClick={handleCreateQuestionForQuizz}
               >
-                Create
+                Create Question
+              </button>
+            </div>
+          ) : (
+            <div className="bg-btnSave">
+              <button
+                type="save"
+                className="btn-save"
+                onClick={handleUpdateQuestionForQuizz}
+              >
+                Save Question
               </button>
             </div>
           )}

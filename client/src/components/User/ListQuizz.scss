@@ -7,27 +7,36 @@
 
   .bg-card {
     background-color: white;
-    // border: 1px solid rgb(9, 255, 0);
     height: auto;
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin-top: 20px;
     padding: 50px;
+    gap: 20px;
 
     .card {
-      border: 1.5px solid rgb(224, 224, 224);
-      // box-shadow: 0 0 8px #abedff;
-
-      border-radius: 5px;
-      width: 25%;
+      border: 2px solid rgb(224, 224, 224);
+      border-radius: 10px;
+      width: 26%;
       padding: 30px;
       overflow: hidden;
-      height: auto;
+      height: 650px;
       transition: 0.5s;
 
-      // &:hover {
-      //   box-shadow: 0 0 8px #d6f6ff;
-      // }
+      &:nth-child(n + 4) {
+        margin-top: 40px;
+      }
+
+      // Add the hover effect to the card
+      &:hover {
+        box-shadow: 0 0 30px rgb(223, 223, 223);
+
+        // Also scale the image when the card is hovered
+        .card-img-top {
+          transform: scale(1.05);
+        }
+      }
 
       .card-img-top {
         margin: 0 auto;
@@ -36,9 +45,10 @@
         height: 50%;
         border-radius: 10px;
         transition: transform 0.5s ease;
-        &:hover {
-          transform: scale(1.05);
-        }
+        // Remove the hover effect from the image itself
+        // &:hover {
+        //   transform: scale(1.05);
+        // }
       }
 
       .card-body {
@@ -47,6 +57,13 @@
         p {
           color: gray;
           font-size: 17px;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-height: 100px;
+          // border: 1px solid gray;
         }
 
         .card-title {
@@ -65,19 +82,19 @@
           transition: 0.3s;
           display: flex;
           margin: 0 auto;
-          margin-top: 100px;
+          // margin-top: 100px;
           font-weight: 700;
           justify-content: center;
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
 
           &:hover {
             background-color: #f27474;
           }
         }
       }
-    }
-    .card:hover {
-      border: 1.5px solid rgb(246, 75, 75);
-      // transform: scale(1.05);
     }
   }
 
