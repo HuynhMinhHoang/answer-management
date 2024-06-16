@@ -41,7 +41,11 @@ const Login = () => {
       dispatch(doLogin(res));
       toast.success(res.EM);
       setIsLoading(false);
-      navigate("/");
+      if (res.DT.role === "ADMIN") {
+        navigate("/admins");
+      } else {
+        navigate("/");
+      }
       // console.log(res.EM);
     } else {
       toast.error(res.EM);
@@ -55,6 +59,12 @@ const Login = () => {
 
   const handleHidePassword = () => {
     setHidePassword(!hidePassword);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
   };
 
   return (
@@ -117,6 +127,7 @@ const Login = () => {
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
+                    onKeyDown={handleKeyDown}
                   />
                 </div>
                 <div className="login-form-input">
@@ -128,6 +139,7 @@ const Login = () => {
                     onChange={(e) => {
                       setPassword(e.target.value);
                     }}
+                    onKeyDown={handleKeyDown}
                   />
 
                   {hidePassword ? (

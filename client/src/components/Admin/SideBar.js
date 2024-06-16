@@ -22,16 +22,47 @@ import { FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImgAdmin from "../../assets/admin.png";
 import { FaKey } from "react-icons/fa";
+import { FaSignOutAlt } from "react-icons/fa";
+import { logoutUser } from "../../services/APIService";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { doLogout } from "../../redux/action/userAction";
+import Swal from "sweetalert2";
 
 const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
   const handleMenuItemClick = (menuItem) => {
     setActiveMenuItem(menuItem);
   };
+  const user = useSelector((state) => state.userRedux.user);
+
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to log out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log out!",
+    });
+
+    if (result.isConfirmed) {
+      let res = await logoutUser(user.email, user.refresh_token);
+      if (res && res.EC === 0) {
+        toast.success(res.EM);
+        dispatch(doLogout());
+      } else {
+        toast.error(res.EM);
+      }
+    }
+  };
+
   return (
     <>
       <ProSidebar
-        // image={sidebarBg}
         collapsed={collapsed}
         toggled={toggled}
         breakPoint="md"
@@ -43,7 +74,6 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
               padding: "24px",
               display: "flex",
               justifyContent: "center",
-              // alignItems: "center",
             }}
           >
             <div>
@@ -54,7 +84,6 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                   height: "25px",
                   width: "25px",
                   marginRight: "10px",
-                  // marginTop: "5px",
                 }}
               />
             </div>
@@ -66,8 +95,6 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                 whiteSpace: "nowrap",
                 color: "#1D79D4",
                 marginTop: "2px",
-                // display: "flex",
-                // alignItems: "baseline",
               }}
             >
               Answer Management
@@ -133,6 +160,18 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
             >
               Assign Quizz
               <Link to="/admins/manage-assign-quizz" />
+            </MenuItem>
+          </Menu>
+
+          <Menu iconShape="circle" className="bg-logout">
+            <MenuItem
+              className={`custom-menu-item ${
+                activeMenuItem === "logout" ? "active" : ""
+              }`}
+              icon={<FaSignOutAlt size={"20px"} color={"rgb(255 116 116)"} />}
+              onClick={() => handleLogout()}
+            >
+              Logout
             </MenuItem>
           </Menu>
         </SidebarContent>

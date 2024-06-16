@@ -128,3 +128,11 @@ body {
   border-top-color: #0dcaf0 !important;
   border-left-color: #0dcaf0 !important;
 }
+
+.languages {
+  margin-left: 15px !important;
+
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}

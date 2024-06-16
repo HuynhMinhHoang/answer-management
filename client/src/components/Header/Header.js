@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FcBusinessman } from "react-icons/fc";
 import { FcBusinesswoman } from "react-icons/fc";
+import { logoutUser } from "../../services/APIService";
+import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 
 const Header = () => {
@@ -17,7 +19,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  // console.log("dex", user, isAuthenticated);
+  console.log("dex", user);
 
   const handleLogin = () => {
     navigate("/login");
@@ -27,8 +29,14 @@ const Header = () => {
     navigate("/register");
   };
 
-  const handleLogout = () => {
-    dispatch(doLogout());
+  const handleLogout = async () => {
+    let res = await logoutUser(user.email, user.refresh_token);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      dispatch(doLogout());
+    } else {
+      toast.error(res.EM);
+    }
   };
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -65,9 +73,11 @@ const Header = () => {
             <NavLink className="nav-link" to="/users">
               Start Quiz
             </NavLink>
-            <NavLink className="nav-link" to="/admins">
-              Admin
-            </NavLink>
+            {user.role === "ADMIN" && (
+              <NavLink className="nav-link" to="/admins">
+                Admin
+              </NavLink>
+            )}
           </Nav>
 
           <Nav>
@@ -107,6 +117,15 @@ const Header = () => {
                 </NavDropdown>
               </>
             )}
+
+            <NavDropdown
+              title="Languages"
+              id="basic-nav-dropdown"
+              className="languages"
+            >
+              <NavDropdown.Item>Vietnam</NavDropdown.Item>
+              <NavDropdown.Item>English</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

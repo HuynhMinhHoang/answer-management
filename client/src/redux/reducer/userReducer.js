@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     username: "",
     image: "",
     role: "",
+    email: "",
   },
   isAuthenticated: false,
 };
@@ -21,6 +22,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
           username: action?.payload?.DT?.username,
           image: action?.payload?.DT?.image,
           role: action?.payload?.DT?.role,
+          email: action?.payload?.DT?.email,
         },
         isAuthenticated: true,
       };
@@ -28,7 +30,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case LOGOUT_USER_SUCCESS:
       return {
         ...state,
-        user: null,
+        user: {
+          access_token: "",
+          refresh_token: "",
+          username: "",
+          image: "",
+          role: "",
+          email: "",
+        },
         isAuthenticated: false,
       };
     default:
