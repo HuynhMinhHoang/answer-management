@@ -1,0 +1,54 @@
+{
+  "homepage": {
+    "tilte1": "Khóa học chuẩn bị thi TOEIC cho người mới",
+    "tilte2": "Khóa học TOEIC dành riêng cho những người đã bỏ lỡ cơ hội, cam kết khôi phục lại nền tảng tiếng Anh sau 3 tháng. Typeform sẽ thúc đẩy bạn học tiếng Anh mỗi ngày.",
+    "tilte3": "Bắt đầu làm bài",
+    "tilte4": "Bắt đầu miễn phí"
+  },
+  "header": {
+    "tilte1": "Trang chủ",
+    "tilte2": "Thi thử",
+    "login": "Đăng nhập",
+    "signup": "Đăng ký",
+    "setting": "Hồ sơ",
+    "logout": "Đăng xuất"
+  },
+  "listquizz": {
+    "tilte1": "Trang chủ",
+    "tilte2": "Thi thử",
+    "start": "Bắt đầu"
+  },
+  "detailquizz": {
+    "prev": "Quay lại",
+    "next": "Kế tiếp",
+    "finish": "Kết thúc"
+  },
+  "question": {
+    "question": "Câu",
+    "noImg": "Không có ảnh hiển thị..."
+  },
+  "login": {
+    "tilte1": "Vẫn chưa có tài khoản?",
+    "tilte2": "Đăng ký",
+    "tilte3": "Liên hệ",
+    "tilte4": "Xin chào, đây là ai?",
+    "tilte5": "Mật khẩu",
+    "tilte6": "Quên mật khẩu?",
+    "tilte7": "Đăng nhập vào Typeform",
+    "tilte8": "Hoặc",
+    "tilte9": "Đăng nhập với Google",
+    "tilte10": "Đăng nhập với Facebook",
+    "tilte11": "hminhhoangdev@gmail.com",
+    "tilte12": "Ít nhất 8 ký tự"
+  },
+  "register": {
+    "tilte1": "Đã có tài khoản?",
+    "tilte2": "Đăng nhập",
+    "tilte3": "Nhận dữ liệu tốt hơn với các biểu mẫu đàm thoại, khảo sát, câu hỏi và hơn thế nữa.",
+    "tilte4": "Họ và tên",
+    "tilte5": "Mật khẩu",
+    "tilte6": "Nhập lại mật khẩu",
+    "tilte7": "Quên mật khẩu?",
+    "tilte8": "Tạo tài khoản miễn phí"
+  }
+}

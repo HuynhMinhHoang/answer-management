@@ -11,8 +11,11 @@ import eye1 from "../../assets/eye1.png";
 import eye2 from "../../assets/eye2.png";
 import { ImSpinner2 } from "react-icons/im";
 import Languages from "../Header/Languages";
+import { useTranslation, Trans } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -80,13 +83,13 @@ const Register = () => {
     <>
       <div className="register-container">
         <div className="login-header">
-          <p>Already have an account?</p>
+          <p>{t("register.tilte1")}</p>
           <button
             onClick={() => {
               handleLogin();
             }}
           >
-            Log in
+            {t("register.tilte2")}
           </button>
           <Languages />
         </div>
@@ -123,10 +126,7 @@ const Register = () => {
                 ></path>
               </svg>
 
-              <p>
-                Get better data with conversational forms, surveys, quizzes &
-                more.
-              </p>
+              <p>{t("register.tilte3")}</p>
             </div>
             <div className="login-form-body">
               <div>
@@ -134,7 +134,7 @@ const Register = () => {
                   {/* <label>Email</label> */}
                   <input
                     type="text"
-                    placeholder="Full Name"
+                    placeholder={t("register.tilte4")}
                     value={username}
                     onChange={(e) => {
                       setUsername(e.target.value);
@@ -156,7 +156,7 @@ const Register = () => {
                   {/* <label>Password</label> */}
                   <input
                     type={hidePassword ? "password" : "text"}
-                    placeholder="Password"
+                    placeholder={t("register.tilte5")}
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -187,7 +187,7 @@ const Register = () => {
                   {/* <label>Password</label> */}
                   <input
                     type={hidePassword ? "password" : "text"}
-                    placeholder="Re-enter Password"
+                    placeholder={t("register.tilte6")}
                     value={reEnterPassword}
                     onChange={(e) => {
                       setReEnterPassword(e.target.value);
@@ -213,7 +213,7 @@ const Register = () => {
                     />
                   )}
                 </div>
-                <p>Forgot password?</p>
+                <p>{t("register.tilte7")}</p>
                 <div className="btn-login">
                   <button
                     onClick={() => {
@@ -224,7 +224,7 @@ const Register = () => {
                     {isLoading === true && (
                       <ImSpinner2 className="loaderIcon" />
                     )}
-                    Create my free account
+                    {t("register.tilte8")}
                   </button>
                 </div>
               </div>

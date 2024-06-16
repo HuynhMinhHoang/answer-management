@@ -29,7 +29,7 @@ const HomePage = () => {
             </button>
           ) : (
             <button onClick={() => navigate("/login")}>
-              Get started—it's free
+              {t("homepage.tilte4")}
             </button>
           )}
         </div>

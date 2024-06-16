@@ -1,0 +1,54 @@
+{
+  "homepage": {
+    "tilte1": "Pre TOEIC course for beginners",
+    "tilte2": "TOEIC course is exclusively for people who have lost their roots, committed to regaining their English basics after 3 months. Typeform will motivate you to learn English every day.",
+    "tilte3": "Take Quiz Now",
+    "tilte4": "Get started—it's free"
+  },
+  "header": {
+    "tilte1": "Home",
+    "tilte2": "Test Quiz",
+    "login": "Log in",
+    "signup": "Sign up",
+    "setting": "Profile",
+    "logout": "Log out"
+  },
+  "listquizz": {
+    "tilte1": "Home Page",
+    "tilte2": "Test Quiz",
+    "start": "Start"
+  },
+  "detailquizz": {
+    "prev": "Previous",
+    "next": "Next",
+    "finish": "Finish"
+  },
+  "question": {
+    "question": "Question",
+    "noImg": "No photos to show..."
+  },
+  "login": {
+    "tilte1": "Don't have an account yet?",
+    "tilte2": "Sign up",
+    "tilte3": "Contact us",
+    "tilte4": "Hello, who’s this?",
+    "tilte5": "Password",
+    "tilte6": "Forgot password?",
+    "tilte7": "Log in to Typeform",
+    "tilte8": "OR",
+    "tilte9": "Log in with Google",
+    "tilte10": "Log in with Facebook",
+    "tilte11": "hminhhoangdev@gmail.com",
+    "tilte12": "At least 8 characters"
+  },
+  "register": {
+    "tilte1": "Already have an account?",
+    "tilte2": "Log in",
+    "tilte3": "Get better data with conversational forms, surveys, quizzes & more.",
+    "tilte4": "Full Name",
+    "tilte5": "Password",
+    "tilte6": "Re-enter Password",
+    "tilte7": "Forgot password?",
+    "tilte8": "Create my free account"
+  }
+}

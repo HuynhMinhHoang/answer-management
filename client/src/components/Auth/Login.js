@@ -13,8 +13,10 @@ import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner2 } from "react-icons/im";
 import Languages from "../Header/Languages";
+import { useTranslation, Trans } from "react-i18next";
 
 const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -72,15 +74,15 @@ const Login = () => {
     <>
       <div className="login-container">
         <div className="login-header">
-          <p>Don't have an account yet?</p>
+          <p>{t("login.tilte1")}</p>
           <button
             onClick={() => {
               handleRegister();
             }}
           >
-            Sign up
+            {t("login.tilte2")}
           </button>
-          <p>Contact us</p>
+          <p>{t("login.tilte3")}</p>
           <Languages />
         </div>
 
@@ -116,7 +118,7 @@ const Login = () => {
                 ></path>
               </svg>
 
-              <p>Hello, who’s this?</p>
+              <p>{t("login.tilte4")}</p>
             </div>
             <div className="login-form-body">
               <div>
@@ -124,7 +126,7 @@ const Login = () => {
                   <label>Email</label>
                   <input
                     type="text"
-                    placeholder="bruce@wayne.com"
+                    placeholder={t("login.tilte11")}
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
@@ -133,10 +135,10 @@ const Login = () => {
                   />
                 </div>
                 <div className="login-form-input">
-                  <label>Password</label>
+                  <label>{t("login.tilte5")}</label>
                   <input
                     type={hidePassword ? "password" : "text"}
-                    placeholder="At least 8 characters"
+                    placeholder={t("login.tilte12")}
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -164,7 +166,7 @@ const Login = () => {
                     />
                   )}
                 </div>
-                <p>Forgot password?</p>
+                <p>{t("login.tilte6")}</p>
                 <div className="btn-login">
                   <button
                     onClick={() => {
@@ -175,22 +177,22 @@ const Login = () => {
                     {isLoading === true && (
                       <ImSpinner2 className="loaderIcon" />
                     )}
-                    Log in to Typeform
+                    {t("login.tilte7")}
                   </button>
                 </div>
 
                 <div className="br">
-                  <span>OR</span>
+                  <span>{t("login.tilte8")}</span>
                 </div>
 
                 <div className="bg-login-or">
                   <div className="google">
-                    <img src={google} />
-                    <p>Log in with Google</p>
+                    <img src={google} alt="gg" />
+                    <p>{t("login.tilte9")}</p>
                   </div>
                   <div className="facebook">
-                    <img src={facebook} />
-                    <p>Log in with Facebook</p>
+                    <img src={facebook} alt="fb" />
+                    <p>{t("login.tilte10")}</p>
                   </div>
                 </div>
               </div>

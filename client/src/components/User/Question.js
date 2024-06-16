@@ -1,7 +1,10 @@
 import _ from "lodash";
 import React from "react";
+import { useTranslation, Trans } from "react-i18next";
 
 const Question = (props) => {
+  const { t } = useTranslation();
+
   const { currentQuestion, data, handleCheckFromParent } = props;
 
   // console.log("data", data);
@@ -22,10 +25,11 @@ const Question = (props) => {
           <img src={`data:image/jpeg;base64,${data.image}`} alt="img" />
         </div>
       ) : (
-        <div className="bg-img">No photos to show...</div>
+        <div className="bg-img">{t("question.noImg")}</div>
       )}
       <h5>
-        Question {currentQuestion + 1}: {data.questionDescription}
+        {t("question.question")} {currentQuestion + 1}:{" "}
+        {data.questionDescription}
       </h5>
 
       <div className="list-answers">

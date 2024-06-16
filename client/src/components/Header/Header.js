@@ -10,8 +10,10 @@ import { logoutUser } from "../../services/APIService";
 import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import Languages from "./Languages";
+import { useTranslation, Trans } from "react-i18next";
 
 const Header = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.userRedux.user);
   const isAuthenticated = useSelector(
@@ -69,10 +71,10 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavLink className="nav-link" to="/">
-              Home
+              {t("header.tilte1")}
             </NavLink>
             <NavLink className="nav-link" to="/users">
-              Start Quiz
+              {t("header.tilte2")}
             </NavLink>
             {user.role === "ADMIN" && (
               <NavLink className="nav-link" to="/admins">
@@ -90,7 +92,7 @@ const Header = () => {
                     handleLogin();
                   }}
                 >
-                  Log in
+                  {t("header.login")}
                 </button>
                 <button
                   className="btn-signup"
@@ -98,12 +100,15 @@ const Header = () => {
                     handleRegister();
                   }}
                 >
-                  Sign up
+                  {t("header.signup")}
                 </button>
               </>
             ) : (
               <>
-                <NavDropdown title="Setting" id="basic-nav-dropdown">
+                <NavDropdown
+                  title={t("header.setting")}
+                  id="basic-nav-dropdown"
+                >
                   <NavDropdown.Item>
                     <FcBusinessman className="settings-icon" />
                     <p>{user.username}</p>
@@ -113,7 +118,7 @@ const Header = () => {
                       handleLogout();
                     }}
                   >
-                    Log out
+                    {t("header.logout")}
                   </NavDropdown.Item>
                 </NavDropdown>
               </>

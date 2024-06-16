@@ -14,8 +14,11 @@ import { toast } from "react-toastify";
 import { MdNavigateNext } from "react-icons/md";
 import { MdDone } from "react-icons/md";
 import ModalCountDownQuizz from "./ModalCountDownQuizz.js";
+import { useTranslation, Trans } from "react-i18next";
 
 const DetailQuizz = () => {
+  const { t } = useTranslation();
+
   const params = useParams();
   const idQuizz = params.id;
   const location = useLocation();
@@ -79,7 +82,7 @@ const DetailQuizz = () => {
                 item.answers.isSelected = false;
                 answer.push(item.answers);
               });
-
+              answer = _.orderBy(answer, ["id"], ["asc"]);
               return { questionId: key, answer, questionDescription, image };
             })
             .value();
@@ -161,7 +164,7 @@ const DetailQuizz = () => {
               navigate("/");
             }}
           >
-            Home Page
+            {t("listquizz.tilte1")}
           </span>
           <MdNavigateNext className="icon" />
           <span
@@ -169,7 +172,7 @@ const DetailQuizz = () => {
               navigate("/users");
             }}
           >
-            Mini Test
+            {t("listquizz.tilte2")}
           </span>
           <MdNavigateNext className="icon" />
           <span>Quizz {idQuizz}</span>
@@ -206,7 +209,7 @@ const DetailQuizz = () => {
               }}
             >
               <MdNavigateNext className="icon-prev" />
-              Previous
+              {t("detailquizz.prev")}
             </button>
 
             <button
@@ -215,7 +218,7 @@ const DetailQuizz = () => {
                 handleNext();
               }}
             >
-              Next
+              {t("detailquizz.next")}
               <MdNavigateNext className="icon-next" />
             </button>
 
@@ -226,7 +229,7 @@ const DetailQuizz = () => {
               }}
             >
               <MdDone className="icon-fi" />
-              Finish
+              {t("detailquizz.finish")}
             </button>
           </div>
         </div>

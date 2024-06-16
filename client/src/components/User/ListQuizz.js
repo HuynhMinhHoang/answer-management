@@ -6,8 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { MdNavigateNext } from "react-icons/md";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { useTranslation, Trans } from "react-i18next";
 
 const ListQuizz = () => {
+  const { t } = useTranslation();
+
   const [arrQuizz, setArrayQuizz] = useState();
 
   const navigate = useNavigate();
@@ -97,10 +100,10 @@ const ListQuizz = () => {
                 navigate("/");
               }}
             >
-              Home Page
+              {t("listquizz.tilte1")}
             </span>
             <MdNavigateNext className="icon" />
-            <span>Mini Test</span>
+            <span>{t("listquizz.tilte2")}</span>
           </div>
           {/* <div className="br"></div> */}
         </div>
@@ -120,7 +123,7 @@ const ListQuizz = () => {
                       <h5 className="card-title">Quizz {item.id}</h5>
                       <p className="card-text">{item.description}</p>
                       <button onClick={() => handleStartQuizz(item)}>
-                        Start Now
+                        {t("listquizz.start")}
                       </button>
                     </div>
                   </div>
