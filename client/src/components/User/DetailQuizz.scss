@@ -196,6 +196,7 @@
       //   margin-left: 20px;
 
       .form-check {
+        margin-top: 10px;
         padding: 0;
         display: flex;
         align-items: center;
@@ -205,12 +206,19 @@
           margin: 0;
           font-size: 23px;
           border-radius: 50%;
+          margin-right: 5px;
+          border: 1.5px solid gray;
+          // background-color: cadetblue;
+
+          &:checked {
+            background-color: rgb(54, 54, 54);
+          }
         }
         input {
           //   margin-bottom: 20px;
+          cursor: pointer;
         }
         label {
-          cursor: pointer;
           font-size: 18px;
           margin-left: 10px;
         }

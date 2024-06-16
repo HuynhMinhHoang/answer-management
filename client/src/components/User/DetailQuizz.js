@@ -231,7 +231,11 @@ const DetailQuizz = () => {
           </div>
         </div>
         <div className="bg-right">
-          <ModalCountDownQuizz dataQuizz={dataQuizz} />
+          <ModalCountDownQuizz
+            dataQuizz={dataQuizz}
+            handleFinish={handleFinish}
+            setCurrentQuestion={setCurrentQuestion}
+          />
         </div>
       </div>
 
