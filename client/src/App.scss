@@ -131,7 +131,14 @@ body {
 
 .languages {
   margin-left: 15px !important;
-
+  a {
+    // margin-left: 5px !important;
+    display: flex;
+    align-items: center;
+    color: rgb(141, 0, 0) !important;
+    font-size: 18px !important;
+    // border: 1px solid red;
+  }
   .dropdown-toggle::after {
     display: none !important;
   }

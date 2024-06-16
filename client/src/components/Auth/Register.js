@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import eye1 from "../../assets/eye1.png";
 import eye2 from "../../assets/eye2.png";
 import { ImSpinner2 } from "react-icons/im";
+import Languages from "../Header/Languages";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -87,6 +88,7 @@ const Register = () => {
           >
             Log in
           </button>
+          <Languages />
         </div>
 
         <div className="login-content">

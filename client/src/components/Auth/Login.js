@@ -12,6 +12,7 @@ import eye2 from "../../assets/eye2.png";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { ImSpinner2 } from "react-icons/im";
+import Languages from "../Header/Languages";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -80,6 +81,7 @@ const Login = () => {
             Sign up
           </button>
           <p>Contact us</p>
+          <Languages />
         </div>
 
         <div className="login-content">

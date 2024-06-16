@@ -9,6 +9,7 @@ import { FcBusinesswoman } from "react-icons/fc";
 import { logoutUser } from "../../services/APIService";
 import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
+import Languages from "./Languages";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -118,14 +119,7 @@ const Header = () => {
               </>
             )}
 
-            <NavDropdown
-              title="Languages"
-              id="basic-nav-dropdown"
-              className="languages"
-            >
-              <NavDropdown.Item>Vietnam</NavDropdown.Item>
-              <NavDropdown.Item>English</NavDropdown.Item>
-            </NavDropdown>
+            <Languages />
           </Nav>
         </Navbar.Collapse>
       </Container>

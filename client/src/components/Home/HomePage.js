@@ -3,8 +3,10 @@ import giftHomepage from "../../assets/gift-homepage.mp4";
 import "./HomePage.scss";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const isAuthenticated = useSelector(
@@ -18,14 +20,13 @@ const HomePage = () => {
       </video>
 
       <div className="homepage-content">
-        <div className="title-1">Make forms worth filling out</div>
-        <div className="title-2">
-          Get more data—like signups, feedback, and anything else—with forms
-          designed to be refreshingly different.
-        </div>
+        <div className="title-1">{t("homepage.tilte1")}</div>
+        <div className="title-2">{t("homepage.tilte2")}</div>
         <div className="title-3">
           {isAuthenticated ? (
-            <button onClick={() => navigate("/users")}>Doing Quizz Now</button>
+            <button onClick={() => navigate("/users")}>
+              {t("homepage.tilte3")}
+            </button>
           ) : (
             <button onClick={() => navigate("/login")}>
               Get started—it's free
