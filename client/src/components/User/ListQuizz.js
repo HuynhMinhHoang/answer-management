@@ -54,15 +54,34 @@ const ListQuizz = () => {
     });
   };
 
+  const alertConfirm = (item) => {
+    return new Promise((resolve) => {
+      Swal.fire({
+        title: "Are you sure?",
+        html: `You want to take this <b>quizz ${item.id}</b>!`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        resolve(result.isConfirmed);
+      });
+    });
+  };
+
   const handleStartQuizz = async (item) => {
     try {
-      await alert(item.id);
-      navigate(`/quizz/${item.id}`, {
-        state: {
-          quizzId: item.id,
-          quizzTitle: item.description,
-        },
-      });
+      const userConfirmed = await alertConfirm(item);
+      if (userConfirmed) {
+        await alert(item.id);
+        navigate(`/quizz/${item.id}`, {
+          state: {
+            quizzId: item.id,
+            quizzTitle: item.description,
+          },
+        });
+      }
     } catch (error) {
       console.error("Error while starting quiz:", error);
     }

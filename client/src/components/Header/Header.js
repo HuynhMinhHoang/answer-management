@@ -63,7 +63,7 @@ const Header = () => {
               Home
             </NavLink>
             <NavLink className="nav-link" to="/users">
-              Users
+              Start Quiz
             </NavLink>
             <NavLink className="nav-link" to="/admins">
               Admin
