@@ -40,6 +40,17 @@ instance.interceptors.response.use(
     return response && response.data ? response.data : response;
   },
   function (error) {
+    NProgress.done();
+
+    // Token expired or invalid
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.data.EC === -1)
+    ) {
+      store.dispatch({ type: "LOGOUT_USER_SUCCESS" });
+      window.location.href = "/login";
+    }
+
     return error && error.response && error.response.data
       ? error.response.data
       : Promise.reject(error);

@@ -9,7 +9,6 @@ import { logoutUser } from "../../../services/APIService";
 import { doLogout } from "../../../redux/action/userAction";
 import Swal from "sweetalert2";
 import "./DashBoard.scss";
-import ImgAVT from "../../../assets/vi.png";
 import Chart from "chart.js/auto";
 import { statsDashBoard } from "../../../services/APIService";
 
@@ -20,12 +19,12 @@ import ImgAnswer from "../../../assets/answer.png";
 
 const DashBoard = () => {
   const { t } = useTranslation();
-  const [listStats, setListStats] = useState(null);
-
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.userRedux.user);
 
-  const dispatch = useDispatch();
+  const [listStats, setListStats] = useState(null);
   const chartRef = useRef(null);
+  const doughnutChartRef = useRef(null);
 
   const fetchListStats = async () => {
     try {
@@ -36,43 +35,46 @@ const DashBoard = () => {
       console.log("Error fetching stats:", error);
     }
   };
+
   useEffect(() => {
     fetchListStats();
   }, []);
 
   useEffect(() => {
+    let barChartInstance = null;
+    let doughnutChartInstance = null;
+
     if (listStats) {
-      const labels = ["Quizzes", "Questions", "Answers"];
-      const data = {
-        labels: labels,
+      // Bar chart configuration
+      const barLabels = ["Quizzes", "Questions", "Answers"];
+      const barData = {
+        labels: barLabels,
         datasets: [
           {
-            label: "Stats Systems",
+            label: "Stats Bar Systems",
             data: [
               listStats?.others?.countQuiz ?? 0,
               listStats?.others?.countQuestions ?? 0,
               listStats?.others?.countAnswers ?? 0,
             ],
             backgroundColor: [
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
               "rgba(255, 99, 132, 0.2)",
-              "rgba(255, 159, 64, 0.2)",
-              "rgba(255, 205, 86, 0.2)",
-              "rgba(75, 192, 192, 0.2)",
             ],
             borderColor: [
+              "rgb(54, 162, 235)",
+              "rgb(153, 102, 255)",
               "rgb(255, 99, 132)",
-              "rgb(255, 159, 64)",
-              "rgb(255, 205, 86)",
-              "rgb(75, 192, 192)",
             ],
             borderWidth: 1,
           },
         ],
       };
 
-      const config = {
+      const barConfig = {
         type: "bar",
-        data: data,
+        data: barData,
         options: {
           scales: {
             y: {
@@ -82,18 +84,55 @@ const DashBoard = () => {
         },
       };
 
-      let chartInstance = null;
+      // Doughnut chart configuration
+      const doughnutLabels = ["Quizzes", "Questions", "Answers"];
+      const doughnutData = {
+        labels: doughnutLabels,
+        datasets: [
+          {
+            label: "Stats Doughnut Systems ",
+            data: [
+              listStats?.others?.countQuiz ?? 0,
+              listStats?.others?.countQuestions ?? 0,
+              listStats?.others?.countAnswers ?? 0,
+            ],
+            backgroundColor: [
+              "rgba(173, 216, 230, 0.8)",
+              "rgba(192, 192, 192, 0.8)",
+              "rgba(144, 238, 144, 0.8)",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
 
+      const doughnutConfig = {
+        type: "doughnut",
+        data: doughnutData,
+      };
+
+      // Render bar chart
       if (chartRef.current) {
-        chartInstance = new Chart(chartRef.current, config);
+        barChartInstance = new Chart(chartRef.current, barConfig);
       }
 
-      return () => {
-        if (chartInstance) {
-          chartInstance.destroy();
-        }
-      };
+      // Render doughnut chart
+      if (doughnutChartRef.current) {
+        doughnutChartInstance = new Chart(
+          doughnutChartRef.current,
+          doughnutConfig
+        );
+      }
     }
+
+    return () => {
+      if (barChartInstance) {
+        barChartInstance.destroy();
+      }
+      if (doughnutChartInstance) {
+        doughnutChartInstance.destroy();
+      }
+    };
   }, [listStats]);
 
   const handleLogout = async () => {
@@ -210,13 +249,19 @@ const DashBoard = () => {
           </div>
 
           <div className="page-content-right">
-            <div className="bg-avt">
-              <img src={ImgAVT} alt="avt" />
+            <div className="bg-profile">
+              <div className="bg-avt profile">
+                <img src={`data:image/jpeg;base64,${user.image}`} alt="avt" />
+              </div>
+
+              <div className="bg-text">
+                <p>{user.username}</p>
+                <p>{user.email}</p>
+              </div>
             </div>
 
-            <div className="bg-text">
-              <p>Huynh Hoang</p>
-              <p>@hminhhoangdev</p>
+            <div className="bg-chart-profile">
+              <canvas ref={doughnutChartRef}></canvas>
             </div>
           </div>
         </div>

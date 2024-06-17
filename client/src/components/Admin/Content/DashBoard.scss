@@ -3,6 +3,7 @@
   font-size: 20px;
   display: flex;
   justify-content: flex-end;
+  //   background-color: rgba(156, 230, 255, 0.8);
   .bg-item {
     border-radius: 10px;
     width: 18%;
@@ -134,32 +135,53 @@
     .page-content-right {
       //   border: 1px solid rgb(198, 0, 0);
       width: 23%;
-      height: 110px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      background-color: white;
-      border-radius: 15px;
-      padding: 24px;
-      .bg-avt {
-        img {
-          height: 60px;
-          width: 60px;
+
+      .bg-profile {
+        height: 130px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0 0 45px #a8effd;
+        border: none;
+        border-radius: 15px;
+        padding: 24px;
+        .bg-avt {
+          img {
+            height: 60px;
+            width: 60px;
+            border-radius: 50%;
+          }
+
+          &.profile {
+            border: 2px solid rgb(223, 223, 223);
+            border-radius: 50%;
+          }
+        }
+
+        .bg-text {
+          margin-left: 20px;
+          p {
+            font-weight: 700;
+            color: #25396f;
+            margin: 0;
+            font-size: 20px;
+          }
+          p:last-child {
+            color: rgb(84, 84, 84);
+            font-size: 16px;
+          }
         }
       }
 
-      .bg-text {
-        margin-left: 20px;
-        p {
-          font-weight: 700;
-          color: #25396f;
-          margin: 0;
-          font-size: 20px;
-        }
-        p:last-child {
-          color: rgb(84, 84, 84);
-          font-size: 16px;
-        }
+      .bg-chart-profile {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: white;
+        border-radius: 15px;
+        padding: 24px;
+        margin-top: 20px;
       }
     }
   }
