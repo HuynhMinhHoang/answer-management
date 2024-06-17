@@ -51,20 +51,59 @@
 
           .bg-avt {
             img {
-              height: 60px;
-              width: 60px;
+              height: 30px;
+              width: 30px;
+            }
+
+            &.user {
+              background-color: #57caeb;
+              height: 50px;
+              width: 50px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            &.quizz {
+              background-color: #9694ff;
+              height: 50px;
+              width: 50px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            &.question {
+              background-color: #5ddab4;
+              height: 50px;
+              width: 50px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            &.answer {
+              background-color: #ff7976;
+              height: 50px;
+              width: 50px;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
             }
           }
+
           .bg-text {
             margin-left: 30px;
             p {
-              font-weight: 700;
-              color: #25396f;
+              font-weight: 600;
+              color: rgb(84, 84, 84);
               margin: 0;
               font-size: 18px;
             }
             p:last-child {
-              color: gray;
+              color: #25396f;
+              font-weight: 800;
               font-size: 16px;
             }
           }
@@ -80,7 +119,7 @@
         height: 590px;
 
         canvas {
-          height: 470px !important;
+          height: 490px !important;
         }
 
         .title-stats {
@@ -118,7 +157,7 @@
           font-size: 20px;
         }
         p:last-child {
-          color: gray;
+          color: rgb(84, 84, 84);
           font-size: 16px;
         }
       }
