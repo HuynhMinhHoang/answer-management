@@ -9,56 +9,25 @@ import {
   SidebarFooter,
   SidebarContent,
 } from "react-pro-sidebar";
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaGithub,
-  FaRegLaughWink,
-} from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import "./SideBar.scss";
-import { FaReact } from "react-icons/fa";
 import { MdSpaceDashboard } from "react-icons/md";
 import { FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ImgAdmin from "../../assets/admin.png";
 import { FaKey } from "react-icons/fa";
-import { FaSignOutAlt } from "react-icons/fa";
-import { logoutUser } from "../../services/APIService";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { doLogout } from "../../redux/action/userAction";
-import Swal from "sweetalert2";
+// import { logoutUser } from "../../services/APIService";
+// import { toast } from "react-toastify";
+// import { useDispatch, useSelector } from "react-redux";
+// import { doLogout } from "../../redux/action/userAction";
+// import Swal from "sweetalert2";
 
 const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
   const [activeMenuItem, setActiveMenuItem] = useState(null);
   const handleMenuItemClick = (menuItem) => {
     setActiveMenuItem(menuItem);
   };
-  const user = useSelector((state) => state.userRedux.user);
-
-  const dispatch = useDispatch();
-
-  const handleLogout = async () => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to log out?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, log out!",
-    });
-
-    if (result.isConfirmed) {
-      let res = await logoutUser(user.email, user.refresh_token);
-      if (res && res.EC === 0) {
-        toast.success(res.EM);
-        dispatch(doLogout());
-      } else {
-        toast.error(res.EM);
-      }
-    }
-  };
+  // const user = useSelector((state) => state.userRedux.user);
 
   return (
     <>
@@ -163,7 +132,7 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
             </MenuItem>
           </Menu>
 
-          <Menu iconShape="circle" className="bg-logout">
+          {/* <Menu iconShape="circle" className="bg-logout">
             <MenuItem
               className={`custom-menu-item ${
                 activeMenuItem === "logout" ? "active" : ""
@@ -173,7 +142,7 @@ const SideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
             >
               Logout
             </MenuItem>
-          </Menu>
+          </Menu> */}
         </SidebarContent>
 
         <SidebarFooter style={{ textAlign: "center" }}>

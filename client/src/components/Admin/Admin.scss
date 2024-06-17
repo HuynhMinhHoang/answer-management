@@ -1,20 +1,29 @@
 .admin-container {
   display: flex;
+  height: 100vh;
+
   .admin-sidebar {
   }
 
   .admin-content {
     width: 100%;
     background-color: #f2f7ff;
+    height: 100%;
+
     .admin-header {
-      // height: 20px;
-      // border: 1px solid red;
+      // border-bottom: 1px solid rgb(227, 227, 227);
+      // display: flex;
+      // align-items: center;
+      // justify-content: end;
+      // background-color: white;
+      // height: 50px;
+      // padding: 0 50px;
+      // font-size: 20px;
     }
 
     .admin-main {
-      height: 100%;
-      display: flex;
-      // align-items: center;
+      flex: 1;
+      // display: flex;
     }
   }
 }
