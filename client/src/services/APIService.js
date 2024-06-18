@@ -134,6 +134,24 @@ const statsDashBoard = () => {
   return axios.get("/api/v1/overview");
 };
 
+const updateProfileUser = (username, userImage) => {
+  const formData = new FormData();
+  formData.append("username", username);
+  formData.append("userImage", userImage);
+  return axios.post("/api/v1/profile", formData);
+};
+
+const refreshToken = (email, refresh_token) => {
+  return axios.post("/api/v1/refresh-token", { email, refresh_token });
+};
+
+const changePasswordUser = (current_password, new_password) => {
+  return axios.post("/api/v1/change-password", {
+    current_password,
+    new_password,
+  });
+};
+
 export {
   postCreateNewUser,
   getListUser,
@@ -156,4 +174,7 @@ export {
   updateQuizzByQuestionAnswer,
   logoutUser,
   statsDashBoard,
+  updateProfileUser,
+  refreshToken,
+  changePasswordUser,
 };

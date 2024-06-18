@@ -5,8 +5,12 @@ import { postCreateNewUser, updateUser } from "../../../services/APIService";
 import "./ModalCRUDUser.scss";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { useSelector } from "react-redux";
 
 export const ModalCRUDUser = (props) => {
+  const user = useSelector((state) => state.userRedux.user);
+  console.log(">>>user", user);
+
   const {
     fetchData,
     dataUserEdit,
@@ -56,6 +60,7 @@ export const ModalCRUDUser = (props) => {
     }
 
     let res = await postCreateNewUser(email, username, password, role, avatar);
+
     if (res && res.EC === 0) {
       setEmail("");
       setUsername("");
@@ -105,6 +110,8 @@ export const ModalCRUDUser = (props) => {
     }
 
     let res = await updateUser(dataUserEdit.id, username, role, avatar);
+    console.log("avatar", avatar);
+
     if (res && res.EC === 0) {
       setUsername("");
       setEmail("");
@@ -114,10 +121,10 @@ export const ModalCRUDUser = (props) => {
       await fetchDataPaginate(currentPage);
       resetDataUserEdit(null);
       toast.success(res.EM);
-      console.log(res);
+      // console.log(res);
     } else {
       toast.error(res.EM);
-      console.log(res);
+      // console.log(res);
     }
   };
 
@@ -138,6 +145,7 @@ export const ModalCRUDUser = (props) => {
     });
   };
 
+  console.log("preview", preview);
   return (
     <>
       <div className="card-container">

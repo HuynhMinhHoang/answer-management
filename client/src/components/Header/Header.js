@@ -1,16 +1,14 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import React, { useState } from "react";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FcBusinessman } from "react-icons/fc";
-import { FcBusinesswoman } from "react-icons/fc";
 import { logoutUser } from "../../services/APIService";
 import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import Languages from "./Languages";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import UpdateProfileModal from "../User/Profile/UpdateProfile";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -21,8 +19,7 @@ const Header = () => {
   );
 
   const dispatch = useDispatch();
-
-  console.log("dex", user);
+  const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
 
   const handleLogin = () => {
     navigate("/login");
@@ -41,6 +38,15 @@ const Header = () => {
       toast.error(res.EM);
     }
   };
+
+  const handleUpdateProfile = () => {
+    setShowUpdateProfileModal(true);
+  };
+
+  const handleCloseUpdateProfileModal = () => {
+    setShowUpdateProfileModal(false);
+  };
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -65,7 +71,6 @@ const Header = () => {
               </svg>
             </p>
           </div>
-          {/* <h1 className="animate__animated animate__backInLeft">ádsadsd</h1> */}
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -109,7 +114,7 @@ const Header = () => {
                   title={t("header.setting")}
                   id="basic-nav-dropdown"
                 >
-                  <NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => handleUpdateProfile()}>
                     <FcBusinessman className="settings-icon" />
                     <p>{user.username}</p>
                   </NavDropdown.Item>
@@ -128,6 +133,11 @@ const Header = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
+
+      <UpdateProfileModal
+        show={showUpdateProfileModal}
+        handleClose={handleCloseUpdateProfileModal}
+      />
     </Navbar>
   );
 };

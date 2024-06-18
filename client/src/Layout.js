@@ -17,6 +17,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import AdminRoute from "./routes/AdminRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UpdateProfile from "./components/User/Profile/UpdateProfile";
 
 const Layout = () => {
   const NotFound = () => {
@@ -39,7 +40,23 @@ const Layout = () => {
               </PrivateRoute>
             }
           />
-          <Route path="/quizz/:id" element={<DetailQuizz />} />
+          <Route
+            path="/quizz/:id"
+            element={
+              <PrivateRoute>
+                <DetailQuizz />
+              </PrivateRoute>
+            }
+          />
+
+          {/* <Route
+            path="/users/profile"
+            element={
+              <PrivateRoute>
+                <UpdateProfile />
+              </PrivateRoute>
+            }
+          /> */}
         </Route>
 
         {/* admin */}
