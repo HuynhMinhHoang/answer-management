@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const CountDownTime = (props) => {
-  const [count, setCount] = useState(2000);
+  const [count, setCount] = useState(30000);
   const [isBlinking, setIsBlinking] = useState(false);
 
   const { handleFinish } = props;

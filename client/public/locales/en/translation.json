@@ -11,17 +11,20 @@
     "login": "Log in",
     "signup": "Sign up",
     "setting": "Profile",
-    "logout": "Log out"
+    "logout": "Log out",
+    "history": "History Tests"
   },
   "listquizz": {
     "tilte1": "Home Page",
-    "tilte2": "Test Quiz",
+    "tilte2": "Test Quizzes",
+    "tilte3": "History Tests",
     "start": "Start"
   },
   "detailquizz": {
     "prev": "Previous",
     "next": "Next",
-    "finish": "Finish"
+    "finish": "Finish",
+    "back": "Go back"
   },
   "question": {
     "question": "Question",
@@ -50,5 +53,21 @@
     "tilte6": "Re-enter Password",
     "tilte7": "Forgot password?",
     "tilte8": "Create my free account"
+  },
+  "updateProfile": {
+    "tilte1": "Update Profile",
+    "tilte2": "Full Name",
+    "tilte3": "Email",
+    "tilte4": "Role",
+    "tilte5": "Change Password",
+    "tilte6": "Current Password",
+    "tilte7": "New Password",
+    "tilte8": "Re-enter Password",
+    "tilte9": "Enter full name",
+    "tilte10": "Enter current password",
+    "tilte11": "Enter new password",
+    "tilte12": "Confirm new password",
+    "save": "Save Changes",
+    "close": "Close"
   }
 }

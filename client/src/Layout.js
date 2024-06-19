@@ -18,6 +18,7 @@ import AdminRoute from "./routes/AdminRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateProfile from "./components/User/Profile/UpdateProfile";
+import HistoryQuizz from "./components/User/HistoryQuizz";
 
 const Layout = () => {
   const NotFound = () => {
@@ -49,14 +50,14 @@ const Layout = () => {
             }
           />
 
-          {/* <Route
-            path="/users/profile"
+          <Route
+            path="/history-quizz"
             element={
               <PrivateRoute>
-                <UpdateProfile />
+                <HistoryQuizz />
               </PrivateRoute>
             }
-          /> */}
+          />
         </Route>
 
         {/* admin */}

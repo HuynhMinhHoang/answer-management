@@ -152,6 +152,10 @@ const changePasswordUser = (current_password, new_password) => {
   });
 };
 
+const getListHistoryQuizz = () => {
+  return axios.get("/api/v1/history");
+};
+
 export {
   postCreateNewUser,
   getListUser,
@@ -177,4 +181,5 @@ export {
   updateProfileUser,
   refreshToken,
   changePasswordUser,
+  getListHistoryQuizz,
 };

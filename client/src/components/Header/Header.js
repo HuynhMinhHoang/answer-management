@@ -81,6 +81,9 @@ const Header = () => {
             <NavLink className="nav-link" to="/users">
               {t("header.tilte2")}
             </NavLink>
+            <NavLink className="nav-link" to="history-quizz">
+              {t("header.history")}
+            </NavLink>
             {user.role === "ADMIN" && (
               <NavLink className="nav-link" to="/admins">
                 Admin

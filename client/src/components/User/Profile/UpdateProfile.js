@@ -29,7 +29,7 @@ const UpdateProfile = ({ show, handleClose }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const user = useSelector((state) => state.userRedux.user);
-  console.log("user", user.image);
+  // console.log("user", user.image);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,8 +68,8 @@ const UpdateProfile = ({ show, handleClose }) => {
 
     //update profile
     let res = await updateProfileUser(username, imageFile);
-    console.log("imageFile", imageFile);
-    console.log("preview", preview);
+    // console.log("imageFile", imageFile);
+    // console.log("preview", preview);
 
     if (res && res.EC === 0) {
       const updatedUser = {
@@ -117,7 +117,7 @@ const UpdateProfile = ({ show, handleClose }) => {
         backdrop="static"
       >
         <Modal.Header closeButton>
-          <Modal.Title>{t("header.signup")}Update Profile</Modal.Title>
+          <Modal.Title>{t("updateProfile.tilte1")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="profile-container">
@@ -167,13 +167,13 @@ const UpdateProfile = ({ show, handleClose }) => {
                           htmlFor="fullName"
                           className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"
                         >
-                          Full Name
+                          {t("updateProfile.tilte2")}
                         </Form.Label>
                         <div className="col-xl-9 col-lg-9 col-md-9">
                           <Form.Control
                             type="text"
                             id="fullName"
-                            placeholder="Enter full name"
+                            placeholder={t("updateProfile.tilte9")}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                           />
@@ -185,14 +185,15 @@ const UpdateProfile = ({ show, handleClose }) => {
                           htmlFor="eMail"
                           className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"
                         >
-                          Email
+                          {t("updateProfile.tilte3")}
                         </Form.Label>
                         <div className="col-xl-9 col-lg-9 col-md-9">
                           <Form.Control
+                            className="input-email"
                             disabled={true}
                             type="email"
                             id="eMail"
-                            placeholder="Enter email ID"
+                            placeholder=""
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                           />
@@ -201,10 +202,11 @@ const UpdateProfile = ({ show, handleClose }) => {
 
                       <Form.Group className="row gutters">
                         <Form.Label className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-                          Role
+                          {t("updateProfile.tilte4")}
                         </Form.Label>
                         <div className="col-xl-9 col-lg-9 col-md-9">
                           <Form.Control
+                            className="input-role"
                             disabled={true}
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
@@ -217,7 +219,7 @@ const UpdateProfile = ({ show, handleClose }) => {
                       <Form.Group className="row gutters">
                         <Form.Check
                           type="checkbox"
-                          label="Change Password"
+                          label={t("updateProfile.tilte5")}
                           className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 checkbox-pass"
                           checked={changePassword}
                           onChange={(e) => setChangePassword(e.target.checked)}
@@ -232,13 +234,13 @@ const UpdateProfile = ({ show, handleClose }) => {
                               htmlFor="currentPassword"
                               className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"
                             >
-                              Current Password
+                              {t("updateProfile.tilte6")}
                             </Form.Label>
                             <div className="col-xl-9 col-lg-9 col-md-9">
                               <Form.Control
                                 type="password"
                                 id="currentPassword"
-                                placeholder="Enter current password"
+                                placeholder={t("updateProfile.tilte10")}
                                 value={currentPassword}
                                 onChange={(e) =>
                                   setCurrentPassword(e.target.value)
@@ -252,13 +254,13 @@ const UpdateProfile = ({ show, handleClose }) => {
                               htmlFor="newPassword"
                               className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"
                             >
-                              New Password
+                              {t("updateProfile.tilte7")}
                             </Form.Label>
                             <div className="col-xl-9 col-lg-9 col-md-9">
                               <Form.Control
                                 type="password"
                                 id="newPassword"
-                                placeholder="Enter new password"
+                                placeholder={t("updateProfile.tilte11")}
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                               />
@@ -270,13 +272,13 @@ const UpdateProfile = ({ show, handleClose }) => {
                               htmlFor="confirmPassword"
                               className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"
                             >
-                              Re-enter Password
+                              {t("updateProfile.tilte8")}
                             </Form.Label>
                             <div className="col-xl-9 col-lg-9 col-md-9">
                               <Form.Control
                                 type="password"
                                 id="confirmPassword"
-                                placeholder="Confirm new password"
+                                placeholder={t("updateProfile.tilte12")}
                                 value={confirmPassword}
                                 onChange={(e) =>
                                   setConfirmPassword(e.target.value)
@@ -295,7 +297,7 @@ const UpdateProfile = ({ show, handleClose }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("updateProfile.close")}
           </Button>
           <Button
             variant="primary"
@@ -303,7 +305,7 @@ const UpdateProfile = ({ show, handleClose }) => {
               handleSaveChanges();
             }}
           >
-            Save Changes
+            {t("updateProfile.save")}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,10 +1,50 @@
 .modal-backdrop {
-  background-color: rgba(115, 115, 115, 0.744);
+  background-color: rgba(115, 115, 115, 0.977);
 }
 
 .modal-content {
   border: none;
-  box-shadow: 0 0 50px #b3b3b3;
+  box-shadow: 0 0 50px #858585;
+  .modal-header {
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #343a40;
+      text-transform: none !important;
+      text-align: center !important;
+    }
+  }
+  .modal-footer {
+    .btn-secondary {
+      color: white;
+      height: 40px;
+      background-color: #6c757d;
+      // padding: 10px;
+      // width: 100px;
+      border: none;
+      border-radius: 8px;
+      // margin-right: 10px;
+      transition: 0.3s;
+    }
+    .btn-secondary:hover {
+      background-color: #565e64;
+    }
+    .btn-primary {
+      height: 40px;
+      color: white;
+      background-color: #0dcaf0;
+      // padding: 10px;
+      // width: 100px;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #0cb7d9;
+    }
+  }
 }
 .profile-container {
   .modal-body {
@@ -76,6 +116,14 @@
         align-items: center;
         padding: 20px;
         flex-wrap: unset;
+        .input-email {
+          background-color: #efefef;
+          cursor: not-allowed;
+        }
+        .input-role {
+          background-color: #efefef;
+          cursor: not-allowed;
+        }
         .checkbox-pass {
           width: 100%;
           // border: 1px solid red !important;
@@ -85,6 +133,7 @@
           margin: 0 auto;
           align-items: center;
           margin: 15px 0px;
+
           input {
             margin-right: 15px;
             height: 23px;
@@ -113,15 +162,6 @@
       width: 260px;
       margin-top: 0px !important;
       border-radius: 5px;
-    }
-  }
-  .modal-header {
-    .modal-title {
-      font-size: 22px;
-      font-weight: 700;
-      color: #343a40;
-      text-transform: none !important;
-      text-align: center !important;
     }
   }
 

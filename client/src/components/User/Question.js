@@ -1,23 +1,20 @@
-import _ from "lodash";
 import React from "react";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
-const Question = (props) => {
+const Question = ({
+  currentQuestion,
+  data,
+  handleCheckFromParent,
+  isShowAnswer,
+}) => {
   const { t } = useTranslation();
 
-  const { currentQuestion, data, handleCheckFromParent } = props;
-
-  // console.log("data", data);
-
-  if (_.isEmpty(data)) {
-    return <div>Loading...</div>;
-  }
-
   const handleCheckInput = (e, answerId, questionId) => {
-    // console.log("handleCheckInput", e);
     handleCheckFromParent(answerId, questionId);
   };
 
+  console.log("Question>>>>", data);
   return (
     <>
       {data.image ? (
@@ -37,7 +34,16 @@ const Question = (props) => {
           data.answer.length > 0 &&
           data.answer.map((item, index) => {
             return (
-              <div className="form-check" key={index}>
+              <div
+                // className="form-check"
+                className={
+                  item.isCorrect === true && isShowAnswer === true
+                    ? "form-check-dis"
+                    : "form-check"
+                }
+                key={index}
+                disabled={isShowAnswer}
+              >
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -49,8 +55,14 @@ const Question = (props) => {
                     );
                   }}
                   checked={item.isSelected}
+                  disabled={isShowAnswer}
                 />
-                <label className="form-check-label">{item.description}</label>
+                <label className="form-check-label">
+                  {item.description}{" "}
+                  {item.isCorrect && (
+                    <IoIosCheckmarkCircle className="is-correct" />
+                  )}
+                </label>
               </div>
             );
           })}

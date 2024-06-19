@@ -15,6 +15,7 @@ import { MdNavigateNext } from "react-icons/md";
 import { MdDone } from "react-icons/md";
 import ModalCountDownQuizz from "./ModalCountDownQuizz.js";
 import { useTranslation, Trans } from "react-i18next";
+import { TbArrowBack } from "react-icons/tb";
 
 const DetailQuizz = () => {
   const { t } = useTranslation();
@@ -30,6 +31,9 @@ const DetailQuizz = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+
+  const [isSubmitQuizz, setIsSubmitQuizz] = useState(false);
+  const [isShowAnswer, setIsShowAnswer] = useState(false);
 
   const handleCheckFromParent = (answerId, questionId) => {
     // console.log("dataQuizz", dataQuizz);
@@ -126,13 +130,43 @@ const DetailQuizz = () => {
     }
 
     payloadData.answers = answers;
-    // console.log("dataQuizz", dataQuizz);
-    // console.log("payloadData", payloadData);
 
     let res = await submitQuizzFinish(payloadData);
     console.log("submitQuizzFinish", res);
     if (res && res.EC === 0) {
+      setIsSubmitQuizz(true);
       setDataModalResult(res.DT);
+
+      // Update dataQuizz with isCorrect based on res.DT.quizData
+      let updatedDataQuizz = dataQuizz.map((item) => {
+        let questionId = +item.questionId;
+        let quizDataItem = res.DT.quizData.find(
+          (data) => data.questionId === questionId
+        );
+
+        if (quizDataItem) {
+          let systemAnswersIds = quizDataItem.systemAnswers.map(
+            (answer) => answer.id
+          );
+          let userAnswersIds = quizDataItem.userAnswers;
+
+          let isCorrect = _.isEqual(
+            systemAnswersIds.sort(),
+            userAnswersIds.sort()
+          );
+          // Add isCorrect to each answer in the question
+          item.answer = item.answer.map((answer) => ({
+            ...answer,
+            isCorrect: systemAnswersIds.includes(answer.id),
+          }));
+        }
+
+        return item;
+      });
+
+      setDataQuizz(updatedDataQuizz);
+      console.log("updatedDataQuizz", updatedDataQuizz);
+
       handleShow();
       toast.success(res.EM);
     }
@@ -153,6 +187,10 @@ const DetailQuizz = () => {
         handleFinish();
       }
     });
+  };
+
+  const handleShowAnswer = () => {
+    setIsShowAnswer(true);
   };
 
   return (
@@ -185,9 +223,7 @@ const DetailQuizz = () => {
             Quizz {location?.state.quizzId}: {location?.state.quizzTitle}
           </div>
           <div className="br"></div>
-          {/* <div>
-          <p>Questions1: Look at the picture and listen to the sentences.</p>
-        </div> */}
+
           <div className="bg-question">
             {/* question */}
             <Question
@@ -198,6 +234,7 @@ const DetailQuizz = () => {
                   ? dataQuizz[currentQuestion]
                   : []
               }
+              isShowAnswer={isShowAnswer}
             />
           </div>
 
@@ -222,15 +259,27 @@ const DetailQuizz = () => {
               <MdNavigateNext className="icon-next" />
             </button>
 
-            <button
-              className="btn-finish"
-              onClick={() => {
-                showAlert();
-              }}
-            >
-              <MdDone className="icon-fi" />
-              {t("detailquizz.finish")}
-            </button>
+            {isSubmitQuizz === true ? (
+              <button
+                className="btn-finish-dis"
+                onClick={() => {
+                  navigate("/users");
+                }}
+              >
+                <TbArrowBack className="icon-fi" />
+                {t("detailquizz.back")}
+              </button>
+            ) : (
+              <button
+                className="btn-finish"
+                onClick={() => {
+                  showAlert();
+                }}
+              >
+                <MdDone className="icon-fi" />
+                {t("detailquizz.finish")}
+              </button>
+            )}
           </div>
         </div>
         <div className="bg-right">
@@ -238,6 +287,8 @@ const DetailQuizz = () => {
             dataQuizz={dataQuizz}
             handleFinish={handleFinish}
             setCurrentQuestion={setCurrentQuestion}
+            isShowAnswer={isShowAnswer}
+            isSubmitQuizz={isSubmitQuizz}
           />
         </div>
       </div>
@@ -246,6 +297,8 @@ const DetailQuizz = () => {
         show={showModal}
         handleClose={handleClose}
         dataModalResult={dataModalResult}
+        isShowAnswer={isShowAnswer}
+        setIsShowAnswer={setIsShowAnswer}
       />
     </div>
   );

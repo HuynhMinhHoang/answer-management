@@ -11,17 +11,20 @@
     "login": "Đăng nhập",
     "signup": "Đăng ký",
     "setting": "Hồ sơ",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "history": "Lịch sử bài thi"
   },
   "listquizz": {
     "tilte1": "Trang chủ",
     "tilte2": "Thi thử",
+    "tilte3": "Lịch sử bài thi",
     "start": "Bắt đầu"
   },
   "detailquizz": {
     "prev": "Quay lại",
     "next": "Kế tiếp",
-    "finish": "Kết thúc"
+    "finish": "Kết thúc",
+    "back": "Trở về"
   },
   "question": {
     "question": "Câu",
@@ -50,5 +53,21 @@
     "tilte6": "Nhập lại mật khẩu",
     "tilte7": "Quên mật khẩu?",
     "tilte8": "Tạo tài khoản miễn phí"
+  },
+  "updateProfile": {
+    "tilte1": "Cập nhật hồ sơ",
+    "tilte2": "Họ và tên",
+    "tilte3": "Email",
+    "tilte4": "Chức vụ",
+    "tilte5": "Đổi mật khẩu",
+    "tilte6": "Mật khẩu hiện tại",
+    "tilte7": "Mật khẩu mới",
+    "tilte8": "Nhập lại mật khẩu",
+    "tilte9": "Nhập họ và tên",
+    "tilte10": "Nhập mật khẩu hiện tại",
+    "tilte11": "Nhập mật khẩu mới",
+    "tilte12": "Nhập lại mật khẩu mới",
+    "save": "Lưu thay đổi",
+    "close": "Quay lại"
   }
 }
