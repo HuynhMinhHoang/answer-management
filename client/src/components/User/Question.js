@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosCheckmarkCircle } from "react-icons/io";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const Question = ({
   currentQuestion,
@@ -14,7 +15,6 @@ const Question = ({
     handleCheckFromParent(answerId, questionId);
   };
 
-  console.log("Question>>>>", data);
   return (
     <>
       {data.image ? (
@@ -35,18 +35,20 @@ const Question = ({
           data.answer.map((item, index) => {
             return (
               <div
-                // className="form-check"
-                className={
-                  item.isCorrect === true && isShowAnswer === true
+                className={`form-check ${
+                  isShowAnswer && item.isCorrect
                     ? "form-check-dis"
-                    : "form-check"
-                }
+                    : item.isSelected
+                    ? "form-check-selected"
+                    : ""
+                }`}
                 key={index}
                 disabled={isShowAnswer}
               >
                 <input
                   className="form-check-input"
-                  type="checkbox"
+                  type="radio"
+                  name={`question-${data.questionId}`}
                   onChange={(e) => {
                     handleCheckInput(
                       e.target.checked,
@@ -58,10 +60,13 @@ const Question = ({
                   disabled={isShowAnswer}
                 />
                 <label className="form-check-label">
-                  {item.description}{" "}
-                  {item.isCorrect && (
-                    <IoIosCheckmarkCircle className="is-correct" />
-                  )}
+                  {item.description}
+                  {isShowAnswer &&
+                    (item.isCorrect ? (
+                      <IoIosCheckmarkCircle className="is-correct" />
+                    ) : (
+                      <AiFillCloseCircle className="is-false" />
+                    ))}
                 </label>
               </div>
             );

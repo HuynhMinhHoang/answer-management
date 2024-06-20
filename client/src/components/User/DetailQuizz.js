@@ -36,22 +36,17 @@ const DetailQuizz = () => {
   const [isShowAnswer, setIsShowAnswer] = useState(false);
 
   const handleCheckFromParent = (answerId, questionId) => {
-    // console.log("dataQuizz", dataQuizz);
-    // console.log("Check from parent", answerId, questionId);
     let dataQuizzClone = _.cloneDeep(dataQuizz);
     let question = _.find(dataQuizzClone, (item) => {
       return +item.questionId === +questionId;
     });
 
     if (question && question.answer) {
-      let changeCheckbox = question.answer.map((item) => {
-        if (+item.id === +answerId) {
-          item.isSelected = !item.isSelected;
-        }
+      let changeRadio = question.answer.map((item) => {
+        item.isSelected = +item.id === +answerId;
         return item;
       });
-      question.answer = changeCheckbox;
-      // console.log("=>>>", changeCheckbox);
+      question.answer = changeRadio;
     }
 
     let index = dataQuizzClone.findIndex((item) => {
@@ -135,9 +130,10 @@ const DetailQuizz = () => {
     console.log("submitQuizzFinish", res);
     if (res && res.EC === 0) {
       setIsSubmitQuizz(true);
+      setIsShowAnswer(true);
       setDataModalResult(res.DT);
 
-      // Update dataQuizz with isCorrect based on res.DT.quizData
+      //update dataQuizz
       let updatedDataQuizz = dataQuizz.map((item) => {
         let questionId = +item.questionId;
         let quizDataItem = res.DT.quizData.find(
@@ -154,7 +150,6 @@ const DetailQuizz = () => {
             systemAnswersIds.sort(),
             userAnswersIds.sort()
           );
-          // Add isCorrect to each answer in the question
           item.answer = item.answer.map((answer) => ({
             ...answer,
             isCorrect: systemAnswersIds.includes(answer.id),
@@ -189,9 +184,9 @@ const DetailQuizz = () => {
     });
   };
 
-  const handleShowAnswer = () => {
-    setIsShowAnswer(true);
-  };
+  // const handleShowAnswer = () => {
+  //   setIsShowAnswer(true);
+  // };
 
   return (
     <div className="detail-quizz-container">

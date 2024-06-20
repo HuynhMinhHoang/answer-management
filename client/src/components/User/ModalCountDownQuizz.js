@@ -6,7 +6,7 @@ const ModalCountDownQuizz = (props) => {
   const refDiv = useRef([]);
   const { dataQuizz, handleFinish, setCurrentQuestion } = props;
 
-  // console.log("dataQuizz", dataQuizz);
+  console.log("ModalCountDownQuizz", dataQuizz);
 
   const getClassQuestion = (question) => {
     if (question && question.answer && question.answer.length > 0) {
